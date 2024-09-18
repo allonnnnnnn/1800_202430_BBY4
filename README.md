@@ -6,7 +6,7 @@ This browser based web application to ...
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
-* Hi, my name is Mohamed! let's create our first project!
+* Hi, my name is Mohamed! let's create our first project.
 * Hi I am Allan Nguyen! I am very excited to create my first project with others! 
 * greeting Jonathan Y
 	
