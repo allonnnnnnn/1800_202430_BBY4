@@ -8,3 +8,10 @@
     color: white;
 }
 
+.navbar-toggler {
+    background-color: white;
+}
+
+.footer {
+    background-color: rgb(0, 0, 198);
+}

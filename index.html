@@ -33,24 +33,13 @@
     <!------------------------------>
     <!-- Stuff for body goes here -->
 
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg sticky-bottom">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">NavBCIT</span></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">Map</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Favourites</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Settings</a>
-              </li>
-            </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search Building..." aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
@@ -59,6 +48,25 @@
         </div>
       </nav>
 
+      <div class="px-4 pt-5 my-5 text-center border-bottom">
+        <h1 class="display-4 fw-bold">Welcome to NavBCIT</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">Click the button below to see the map!</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Go to Map</button>
+            </div>
+        </div>
+        <div class="overflow-hidden" style="max-height: 30vh;">
+            <div class="container px-5">
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer fixed-bottom">
+      <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+    </footer>
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
