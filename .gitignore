@@ -2,4 +2,5 @@
 *.logs
 node_modules/
 .vscode/
-GoogleAPI__BBY4.js
+.env
+GoogleAPI_BBY4.js
