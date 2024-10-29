@@ -13,6 +13,11 @@ app.get("/", function(req, res) {
     res.send(doc);
 });
 
+app.get("/login", function(req, res) {
+    let doc = fs.readFileSync("./app/html/login.html", "utf-8");
+    res.send(doc);
+});
+
 app.get("/home", function(req, res) {
     let doc = fs.readFileSync("./app/html/main.html", "utf-8");
     res.send(doc);

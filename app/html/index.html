@@ -19,6 +19,13 @@
     </script>
 
   <!-- Other libraries go here -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
 
   <!-- Link to styles of your own -->
@@ -40,12 +47,6 @@
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search Building..." aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
     </div>
   </nav>
 
@@ -54,7 +55,7 @@
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">Click the button below to sign up or login!</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-        <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Signup/Login</button>
+        <a href="login"><button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Signup/Login</button></a>
       </div>
     </div>
     <div class="overflow-hidden" style="max-height: 30vh;">
@@ -73,7 +74,7 @@
   <!---------------------------------------------->
 
   <!-- Link to scripts of your own -->
-  <!-- <script src="./scripts/script.js"></script> -->
+  <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
 
 </body>
 
