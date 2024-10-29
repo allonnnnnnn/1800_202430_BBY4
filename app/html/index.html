@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>My BCIT Project</title>
+  <title>NavBCIT</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!-- Required meta tags -->
@@ -40,22 +40,14 @@
   <!------------------------------>
   <!-- Stuff for body gogit ses here -->
 
-  <nav class="navbar navbar-expand-lg sticky-bottom">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">NavBCIT</span></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-  </nav>
+  <div id="navbarPlaceholder"></div>
 
   <div class="px-4 pt-5 my-5 text-center border-bottom">
     <h1 class="display-4 fw-bold">Welcome to NavBCIT</h1>
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">Click the button below to sign up or login!</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-        <a href="login"><button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Signup/Login</button></a>
+        <a href="/login"><button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Signup/Login</button></a>
       </div>
     </div>
     <div class="overflow-hidden" style="max-height: 30vh;">
@@ -66,7 +58,7 @@
 
   <footer class="footer fixed-bottom">
     <div class="container">
-      <span class="text-muted">About page</span>
+      <p></p>
     </div>
   </footer>
   <!---------------------------------------------->
@@ -75,6 +67,11 @@
 
   <!-- Link to scripts of your own -->
   <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
+  <script src="/js/authentication.js"></script>
+
+  <script> 
+    logout();
+  </script>
 
 </body>
 

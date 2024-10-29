@@ -27,3 +27,31 @@ var uiConfig = {
 };
 
 ui.start('#firebaseui-auth-container', uiConfig);
+
+function logout() {
+    firebase.auth().signOut().then(() => {
+        // Sign-out successful.
+        console.log("logging out user");
+    }).catch((error) => {
+        // An error happened.
+    });
+}
+
+function checkForUser() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            $('#navbarPlaceholder').load('/html/loggedInNavbar.html', function() {
+
+            let username = user.displayName;
+                console.log(username);
+                document.getElementById("name-goes-here").innerText = username;
+            });
+        } else {
+            $('#navbarPlaceholder').load('/html/loggedOutNavbar.html');
+
+            console.log("No user is currently logged in")
+        }
+    })
+}
+checkForUser();
+
