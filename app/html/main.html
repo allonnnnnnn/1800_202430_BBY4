@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>My BCIT Project</title>
+  <title>NavBCIT</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <!-- Required meta tags -->
@@ -19,6 +19,13 @@
     </script>
 
   <!-- Other libraries go here -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
 
   <!-- Link to styles of your own -->
@@ -33,29 +40,13 @@
   <!------------------------------>
   <!-- Stuff for body gogit ses here -->
   
-  <nav class="navbar navbar-expand-lg sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">NavBCIT</span></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search Building..." aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+  <div id="navbarPlaceholder"></div>
   
-  <div id="map">
-
-  </div>
+  <div id="map"></div>
 
   <footer class="footer fixed-bottom">
     <div class="container">
-      <span class="text-muted">About page</span>
+      <p></p>
     </div>
   </footer>
   <!---------------------------------------------->
@@ -63,6 +54,8 @@
   <!---------------------------------------------->
 
   <!-- Link to scripts of your own -->
+  <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
+  <script src="/js/authentication.js"></script>
   <script src="/js/map.js" type="module"></script>
 
 </body>
