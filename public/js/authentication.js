@@ -9,7 +9,7 @@ var uiConfig = {
             document.getElementById('loader').style.display = 'none';
         }
     },
-    
+
     signInFlow: 'popup',
     signInSuccessUrl: "home",
     signInOptions: [
@@ -40,9 +40,9 @@ function logout() {
 function checkForUser() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            $('#navbarPlaceholder').load('/html/loggedInNavbar.html', function() {
+            $('#navbarPlaceholder').load('/html/loggedInNavbar.html', function () {
 
-            let username = user.displayName;
+                let username = user.displayName;
                 console.log(username);
                 document.getElementById("name-goes-here").innerText = username;
             });

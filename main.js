@@ -24,6 +24,11 @@ app.get("/home", function (req, res) {
     res.send(doc);
 });
 
+app.get("/home/favourites", function (req, res) {
+    let doc = fs.readFileSync("./app/html/main.html", "utf-8");
+    res.send(doc);
+});
+
 let port = 8000;
 app.listen(port, function () {
     console.log("Listening on port " + port);
