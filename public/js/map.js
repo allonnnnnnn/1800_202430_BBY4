@@ -1,12 +1,36 @@
 import apiKey from "./GoogleAPI_BBY4.js";
+let map;
+
+async function placeMarkers() {
+    let {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
+    const markers = new AdvancedMarkerElement({
+        map: map,
+        position: {lat: 49.253300, lng: -123.001550},
+        title: "Timmy's"
+    })
+}
 
 window.initMap = function() {
-    const mapOptions = {
-        center: { lat: 49.248, lng: -123.0005},
-        zoom: 15.5, // Zoom level
+    const bounds = {
+        north: 49.254794,
+        east: -122.993394,
+        south: 49.241543,
+        west: -123.004505
     };
 
-    const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    const mapOptions = {
+        center: { lat: 49.248, lng: -123.0005},
+        zoom: 20, // Zoom level
+        mapId: "BCITMap",
+        restriction: {
+            latLngBounds: bounds,
+            strictBounds: true
+        },
+    };
+
+    placeMarkers();
+
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
 
 function LoadGoogleMaps() {

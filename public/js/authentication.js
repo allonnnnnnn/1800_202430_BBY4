@@ -43,7 +43,6 @@ function checkForUser() {
             $('#navbarPlaceholder').load('/html/loggedInNavbar.html', function () {
 
                 let username = user.displayName;
-                console.log(username);
                 document.getElementById("name-goes-here").innerText = username;
             });
         } else {
