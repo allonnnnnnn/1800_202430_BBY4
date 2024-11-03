@@ -25,8 +25,8 @@ app.get("/home", function (req, res) {
 });
 
 app.get("/home/favourites", function (req, res) {
-    let doc = fs.readFileSync("./app/html/.html", "utf-8");
-    res.send(doc);
+    //let doc = fs.readFileSync("./app/html/.html", "utf-8");
+    //res.send(doc);
 });
 
 let port = 8000;

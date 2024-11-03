@@ -23,7 +23,7 @@ var uiConfig = {
     // Terms of service url.
     tosUrl: '<your-tos-url>',
     // Privacy policy url.
-    privacyPolicyUrl: '<your-privacy-policy-url>'
+    privacyPolicyUrl: '<your-privacy-policy-url>',
 };
 
 ui.start('#firebaseui-auth-container', uiConfig);

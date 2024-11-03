@@ -21,11 +21,12 @@ window.initMap = function() {
     const mapOptions = {
         center: { lat: 49.248, lng: -123.0005},
         zoom: 20, // Zoom level
-        mapId: "BCITMap",
+        mapId: "e1a7e8a6dbcb9005",
         restriction: {
             latLngBounds: bounds,
             strictBounds: true
         },
+        gestureHandling: "greedy"
     };
 
     placeMarkers();
