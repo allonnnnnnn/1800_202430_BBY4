@@ -1,12 +1,24 @@
 import apiKey from "./GoogleAPI_BBY4.js";
 let map;
 
-async function placeMarkers() {
+const washroomImg = document.createElement("img");
+washroomImg.src = "/images/WashroomIcon.png";
+washroomImg.style.height = "70px";
+
+const waterFountainImg = document.createElement("img");
+waterFountainImg.src = "/images/WaterFountainIcon.png";
+waterFountainImg.style.height = "70px";
+
+const microwaveImg = document.createElement("img");
+microwaveImg.src = "/images/MicrowaveIcon.png";
+microwaveImg.style.height = "70px";
+
+async function placeMarkers(lat, lng) {
     let {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
     const markers = new AdvancedMarkerElement({
         map: map,
-        position: {lat: 49.253300, lng: -123.001550},
-        title: "Timmy's"
+        position: {lat: lat, lng: lng},
+        content: microwaveImg.cloneNode()
     })
 }
 
@@ -19,8 +31,8 @@ window.initMap = function() {
     };
 
     const mapOptions = {
-        center: { lat: 49.248, lng: -123.0005},
-        zoom: 20, // Zoom level
+        center: { lat: 49.250019, lng: -123.002707},
+        zoom: 20,
         mapId: "e1a7e8a6dbcb9005",
         restriction: {
             latLngBounds: bounds,
@@ -29,7 +41,8 @@ window.initMap = function() {
         gestureHandling: "greedy"
     };
 
-    placeMarkers();
+    placeMarkers(49.250105, -123.00233);
+    placeMarkers(49.251258, -123.001708);
 
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
