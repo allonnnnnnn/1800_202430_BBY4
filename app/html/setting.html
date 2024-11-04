@@ -31,24 +31,7 @@
 
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="/css/style.css">
-  <style>
-    body {
-        background-image: url('/images/bcit2.jpg'); 
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-      }
-      .outlined-text {
-      color: rgba(255, 254, 254, 0.933);
-      text-shadow: 
-          -1px -1px 0 black,  
-           1px -1px 0 black,
-          -1px  1px 0 black,
-           1px  1px 0 black;
-      }
 
-</style>
 </head>
 
 <body>
@@ -57,34 +40,19 @@
   <!-- Your HTML Layout go here -->
   <!------------------------------>
   <!-- Stuff for body gogit ses here -->
-  
+
   <div id="navbarPlaceholder"></div>
 
-  <div class="px-4 pt-5 my-5 text-center border-bottom" style="color: rgb(255, 255, 255);">
-  <div class="container my-5">
-    <div class="d-flex flex-column align-items-center">
-        <img class="img-fluid mb-3" src="/images/logo.png" alt="Logo" style="max-width: 90px;">
-        <h1 class="display-4 fw-bold outlined-text text-center">Welcome to NavBCIT</h1>
-        <p class="lead mb-4 fw-bold outlined-text text-center">Click the button below to get started on viewing an interactive map of BCIT!</p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <a href="/login"><button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Sign up/Login</button></a>
-        </div>
-    </div>
-</div>
+  <br><br><br>
 
-
-    <div class="overflow-hidden" style="max-height: 30vh;">
-      <div class="container px-5">
-      </div>
-    </div>
-  </div>
-
+  
   <footer class="footer fixed-bottom">
     <div class="container">
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <img src="/images/logo.png" width="50" height="50" class="img-thumbnail" alt="logo">
-          <a class="navbar-brand" style="color: black;" href="#">NAVBCIT</a>
+          <a class="navbar-brand" style="color: black;"><span id="name-goes-here"></span></a>
+          <a href="/home/setting" class="nav-link">Setting</a>
+          <a href="/home/setting"><img src="/images/settings.png" width="50" height="50" class="img-thumbnail" alt="logo"></a>
         </div>
       </nav>
     </div>
@@ -93,14 +61,8 @@
   <!-- Your own JavaScript functions go here    -->
   <!---------------------------------------------->
 
-  <!-- Link to scripts of your own -->
   <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
   <script src="/js/authentication.js"></script>
-  <script src="/js/map.js"></script>
-
-  <script> 
-    logout();
-  </script>
 
 </body>
 
