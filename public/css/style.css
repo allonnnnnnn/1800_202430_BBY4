@@ -25,3 +25,8 @@ img {
 .footer {
     background-color: rgb(0, 0, 198);
 }
+
+.white-img {
+    filter: invert(100%) brightness(100%);
+}
+  
