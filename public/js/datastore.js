@@ -18,9 +18,10 @@ async function readAllBuilding() {
 readAllBuilding();
 
 function writeWaterFountains(waterFountainName, lat, lng) {
+    let geopoint = new firebase.firestore.GeoPoint(lat, lng);
     let doc = db.collection("Features").doc("WaterFountains").set({
-        waterFountainName : {lat, lng}
+        [waterFountainName]: geopoint
     });
     
 }
-writeWaterFountains("jdjf", 345, 464);
+writeWaterFountains("what", 45, -30);
