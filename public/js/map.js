@@ -13,7 +13,7 @@ const microwaveImg = document.createElement("img");
 microwaveImg.src = "/images/MicrowaveIcon.png";
 microwaveImg.style.height = "70px";
 
-async function placeMarkers(lat, lng) {
+window.placeMarkers = async function (lat, lng) {
     let {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
     const markers = new AdvancedMarkerElement({
         map: map,
@@ -40,9 +40,6 @@ window.initMap = function() {
         },
         gestureHandling: "greedy"
     };
-
-    placeMarkers(49.250105, -123.00233);
-    placeMarkers(49.251258, -123.001708);
 
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
