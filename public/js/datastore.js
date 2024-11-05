@@ -3,9 +3,24 @@ async function readAllBuilding() {
     let buildingSnap = await buildingRef.get();
 
     for (const key in buildingSnap.data()) {
-        console.log(key);
-        window.placeMarkers(buildingSnap.data()[key].latitude,buildingSnap.data()[key].longitude)
+        let labelElement = document.createElement("div");
+        labelElement.innerText = key;
+        labelElement.style = "font-size: 25pt";
+        
+        let {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
+        new AdvancedMarkerElement ({
+            map: window.map,
+            position: {lat: buildingSnap.data()[key].latitude, lng: buildingSnap.data()[key].longitude},
+            content: labelElement
+        })
     }
 }
-readAllBuilding()
+readAllBuilding();
 
+function writeWaterFountains(waterFountainName, lat, lng) {
+    let doc = db.collection("Features").doc("WaterFountains").set({
+        waterFountainName : {lat, lng}
+    });
+    
+}
+writeWaterFountains("jdjf", 345, 464);
