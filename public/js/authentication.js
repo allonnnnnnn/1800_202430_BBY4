@@ -45,8 +45,10 @@ function checkForUser() {
                 let username = user.displayName;
                 document.getElementById("name-goes-here").innerText = username;
             });
+            $('#footerPlaceholder').load('/html/loggedInFooter.html');
         } else {
             $('#navbarPlaceholder').load('/html/loggedOutNavbar.html');
+            $('#footerPlaceholder').load('/html/loggedOutFooter.html');
 
             console.log("No user is currently logged in")
         }
