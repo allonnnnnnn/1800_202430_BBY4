@@ -24,4 +24,4 @@ function writeWaterFountains(waterFountainName, lat, lng) {
     });
     
 }
-writeWaterFountains("what", 45, -30);
+writeWaterFountains();

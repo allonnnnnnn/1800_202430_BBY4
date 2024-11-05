@@ -32,7 +32,7 @@ window.initMap = function() {
 
     const mapOptions = {
         center: { lat: 49.250019, lng: -123.002707},
-        zoom: 20,
+        zoom: 15,
         mapId: "e1a7e8a6dbcb9005",
         restriction: {
             latLngBounds: bounds,
