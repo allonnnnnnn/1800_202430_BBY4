@@ -9,3 +9,8 @@ async function readAllBuilding() {
 }
 readAllBuilding()
 
+function displayFav() {
+    let user =db.collection("User").doc(userUID);
+    
+
+}
