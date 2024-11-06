@@ -1,10 +1,12 @@
-async function writeReview() {
+async function writeRequest() {
     let user = firebase.auth().currentUser;
 
-    let input = document.getElementById("description").value;
+    let input1 = document.getElementById("description").value;
+    let input2 = document.getElementById("building").value;
     db.collection("Requests").add({
         user: user.displayName,
-        Request: input
+        Request: input1,
+        building: input2
     });
 }
 
