@@ -15,10 +15,7 @@ async function readAllBuilding() {
         })
     }
 }
-<<<<<<< HEAD
 readAllBuilding()
-=======
-readAllBuilding();
 
 function writeBuildings(buildingName, lat, lng) {
     let geopoint = new firebase.firestore.GeoPoint(lat, lng);

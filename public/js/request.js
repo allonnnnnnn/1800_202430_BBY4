@@ -1,5 +1,4 @@
 async function writeRequest() {
-function writeReview() {
     let user = firebase.auth().currentUser;
 
     let input1 = document.getElementById("description").value;
