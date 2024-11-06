@@ -1,4 +1,4 @@
-async function writeReview() {
+function writeReview() {
     let user = firebase.auth().currentUser;
 
     let input = document.getElementById("description").value;
@@ -7,5 +7,14 @@ async function writeReview() {
         Request: input
     });
 }
+
+function readReview() {
+    db.collection("Requests").get().then((querySnapshot) => {
+        querySnapshot.forEach(requestDoc => {
+            console.log(requestDoc.data().Request);
+        });
+    });
+}
+readReview();
 
 

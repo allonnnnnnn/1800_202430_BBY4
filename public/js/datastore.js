@@ -6,22 +6,50 @@ async function readAllBuilding() {
         let labelElement = document.createElement("div");
         labelElement.innerText = key;
         labelElement.style = "font-size: 25pt";
-        
-        let {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
-        new AdvancedMarkerElement ({
+
+        let { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+        new AdvancedMarkerElement({
             map: window.map,
-            position: {lat: buildingSnap.data()[key].latitude, lng: buildingSnap.data()[key].longitude},
+            position: { lat: buildingSnap.data()[key].latitude, lng: buildingSnap.data()[key].longitude },
             content: labelElement
         })
     }
 }
 readAllBuilding();
 
-function writeWaterFountains(waterFountainName, lat, lng) {
+function writeBuildings(buildingName, lat, lng) {
     let geopoint = new firebase.firestore.GeoPoint(lat, lng);
     let doc = db.collection("Features").doc("WaterFountains").set({
-        [waterFountainName]: geopoint
+        [buildingName]: geopoint
     });
-    
+
 }
-writeWaterFountains();
+writeBuildings("SW05", 49, 33);
+
+function writeWaterFountains(fountainName, lat, lng) {
+    let geopoint = new firebase.firestore.GeoPoint(lat, lng);
+    let doc = db.collection("Features").doc("WaterFountains").set({
+        [fountainName]: geopoint
+    });
+
+}
+writeWaterFountains("SW03_1", 49.250034, -123.002498);
+
+async function readAllWaterFountains() {
+    let fountainsRef = db.collection("Features").doc("WaterFountains");
+    let fountainsSnap = await fountainsRef.get();
+
+    for (const key in fountainsSnap.data()) {
+        const waterFountainImg = document.createElement("img");
+        waterFountainImg.src = "/images/WaterFountainIcon.png";
+        waterFountainImg.style.height = "40px";
+
+        let { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+        new AdvancedMarkerElement({
+            map: window.map,
+            position: { lat: fountainsSnap.data()[key].latitude, lng: fountainsSnap.data()[key].longitude },
+            content: waterFountainImg
+        })
+    }
+}
+readAllWaterFountains();
