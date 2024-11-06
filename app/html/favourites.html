@@ -41,6 +41,9 @@
 
 <body>
 
+  <template id="listTemplate">
+    <li class="list-group-item"><span class="building">Building</span> <span class="classroom">classroom</span></li>
+  </template>
   <!------------------------------>
   <!-- Your HTML Layout go here -->
   <!------------------------------>
@@ -54,8 +57,10 @@
     <div class="card-header">
       Favourites
     </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"><span class="Building">SW5</span> <span class="Classroom">1840</span></li>
+    <ul class="list-group list-group-flush ">
+      <div id="Favourites-go-here" class="cols row-cols-auto">
+
+      </div>
 
     </ul>  
     <ul class="list-group" style="list-style: none;">
@@ -84,6 +89,7 @@
 
   <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
   <script src="/js/authentication.js"></script>
+  <script src="/js/favourites.js"></script>
 
 </body>
 
