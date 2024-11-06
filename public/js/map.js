@@ -1,5 +1,5 @@
 import apiKey from "./GoogleAPI_BBY4.js";
-let map;
+window.map;
 
 const washroomImg = document.createElement("img");
 washroomImg.src = "/images/WashroomIcon.png";
@@ -16,7 +16,7 @@ microwaveImg.style.height = "70px";
 window.placeMarkers = async function (lat, lng) {
     let {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
     const markers = new AdvancedMarkerElement({
-        map: map,
+        map: window.map,
         position: {lat: lat, lng: lng},
         content: microwaveImg.cloneNode()
     })
@@ -32,7 +32,7 @@ window.initMap = function() {
 
     const mapOptions = {
         center: { lat: 49.250019, lng: -123.002707},
-        zoom: 20,
+        zoom: 15,
         mapId: "e1a7e8a6dbcb9005",
         restriction: {
             latLngBounds: bounds,
@@ -41,7 +41,7 @@ window.initMap = function() {
         gestureHandling: "greedy"
     };
 
-    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    window.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
 
 function LoadGoogleMaps() {
