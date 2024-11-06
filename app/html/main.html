@@ -27,7 +27,7 @@
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="/css/style.css">
 
@@ -41,7 +41,20 @@
   <!-- Stuff for body gogit ses here -->
   
   <div id="navbarPlaceholder"></div>
+   
+  <div class="container d-flex justify-content-center mt-3">
+    <div class="input-group rounded" style="max-width: 400px; width: 100%;">
+      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" id="search-input"/>
+      <span class="input-group-text border-0" id="search-addon">
+        <button onclick="ClickSearch()" class="btn btn-link p-0">
+          <i class="fas fa-search"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+
   
+
   <div id="map"></div>
 
   <div id="footerPlaceholder"></div>
