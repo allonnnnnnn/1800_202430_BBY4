@@ -15,6 +15,9 @@ async function readAllBuilding() {
         })
     }
 }
+<<<<<<< HEAD
+readAllBuilding()
+=======
 readAllBuilding();
 
 function writeBuildings(buildingName, lat, lng) {
