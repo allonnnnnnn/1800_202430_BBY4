@@ -3,20 +3,25 @@ async function displayFav(collection) {
 
     let listTemplate = document.getElementById("listTemplate");
 
-    console.log(user);
-    db.collection("User").doc(user).collection("Favourites").get()
-        .then((allFav) => {
-            allFav.forEach(doc => {
-                var buliding = doc.data().Building;
-                var classroom = doc.data().Classroom
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            db.collection("User").doc(user).collection("Favourites").get()
+                .then((allFav) => {
+                    allFav.forEach(doc => {
+                        var buliding = doc.data().Building;
+                        var classroom = doc.data().Classroom
 
-                let newcard = listTemplate.content.cloneNode(true);
-                newcard.querySelector('.building').innerHTML = buliding;
-                newcard.querySelector('.classroom').innerHTML = classroom;
-                console.log(collection);
-                document.getElementById(collection + "-go-here").appendChild(newcard);
-            })
-        })
+                        let newcard = listTemplate.content.cloneNode(true);
+                        newcard.querySelector('.building').innerHTML = buliding;
+                        newcard.querySelector('.classroom').innerHTML = classroom;
+                        console.log(collection);
+                        document.getElementById(collection + "-go-here").appendChild(newcard);
+                    })
+                })
+        } else {
+            console.log("usr is not login");
+    }
+    });
 
 }
 displayFav("Favourites");
