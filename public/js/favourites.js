@@ -3,7 +3,6 @@ async function displayFav(collection) {
 
     let listTemplate = document.getElementById("listTemplate");
 
-    console.log(user);
     db.collection("User").doc(user).collection("Favourites").get()
         .then((allFav) => {
             allFav.forEach(doc => {

@@ -53,6 +53,8 @@ function logout() {
 function checkForUser() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
+            console.log("logged in");
+
             $('#navbarPlaceholder').load('/html/loggedInNavbar.html', function () {
 
                 let username = user.displayName;
