@@ -18,7 +18,7 @@ window.placeMarkers = async function (lat, lng) {
     const markers = new AdvancedMarkerElement({
         map: window.map,
         position: {lat: lat, lng: lng},
-        content: microwaveImg.cloneNode()
+        content: microwaveImg.cloneNode(),
     })
 }
 
@@ -38,7 +38,8 @@ window.initMap = function() {
             latLngBounds: bounds,
             strictBounds: true
         },
-        gestureHandling: "greedy"
+        gestureHandling: "greedy",
+        disableDefaultUI: true
     };
 
     window.map = new google.maps.Map(document.getElementById("map"), mapOptions);
