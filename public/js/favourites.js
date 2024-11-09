@@ -1,17 +1,16 @@
 async function displayFav(collection) {
-    let user = firebase.auth().currentUser;
 
     let listTemplate = document.getElementById("listTemplate");
 
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
             db.collection("User").doc(user).collection("Favourites").get()
                 .then((allFav) => {
                     allFav.forEach(doc => {
-                        var buliding = doc.data().Building;
-                        var classroom = doc.data().Classroom
+                        const buliding = doc.data().Building;
+                        const classroom = doc.data().Classroom
 
-                        let newcard = listTemplate.content.cloneNode(true);
+                        const newcard = listTemplate.content.cloneNode(true);
                         newcard.querySelector('.building').innerHTML = buliding;
                         newcard.querySelector('.classroom').innerHTML = classroom;
                         console.log(collection);
@@ -19,7 +18,7 @@ async function displayFav(collection) {
                     })
                 })
         } else {
-            console.log("usr is not login");
+            console.log("user is not login");
     }
     });
 
@@ -43,3 +42,4 @@ function addFav() {
         console.log("No user is signed in");
     }
 }
+
