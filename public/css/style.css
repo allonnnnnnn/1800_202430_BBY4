@@ -8,6 +8,13 @@ img {
     height: 705px;
 }
 
+#infoCard {
+    min-width: 308px; 
+    width: 40vw; 
+    height: 85vh;
+    right: 0;
+}
+
 .navbar {
     background-color: rgb(0, 0, 198);
 }
