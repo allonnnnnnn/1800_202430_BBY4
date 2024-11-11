@@ -9,10 +9,31 @@ img {
 }
 
 #infoCard {
-    min-width: 308px; 
+    padding: 0 15px;
+    min-width: 208px; 
     width: 40vw; 
     height: 85vh;
     right: 0;
+}
+
+#infoCardButtons {
+    margin-bottom: 200px;
+    justify-content: space-between;
+}
+
+#infoCardButtons button {
+    max-width: 43px;
+    max-height: 43px;
+    margin: auto 5px;
+    height: 10vw;
+    width: 10vw;
+}
+
+#infoCardButtons p {
+    width: 50px;
+    text-align: center;
+    font-size: 7.4pt;
+    margin: 0 auto;
 }
 
 .navbar {

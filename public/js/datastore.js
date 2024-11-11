@@ -8,11 +8,16 @@ async function readAllBuilding() {
         labelElement.style = "font-size: 25pt";
 
         let { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-        new AdvancedMarkerElement({
+        let buildingMarker = new AdvancedMarkerElement({
             map: window.map,
             position: { lat: buildingSnap.data()[key].latitude, lng: buildingSnap.data()[key].longitude },
-            content: labelElement
-        })
+            content: labelElement,
+            gmpClickable: true
+        });
+        
+        buildingMarker.addListener("click", function() {
+            window.onMarkerClicked(buildingSnap.data(), key);
+        });
     }
 }
 readAllBuilding()
