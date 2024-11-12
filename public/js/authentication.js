@@ -5,11 +5,27 @@ var uiConfig = {
         signInSuccessWithAuthResult: function (authResult, redirectUrl) {
             var user = authResult.user;
             if (authResult.additionalUserInfo.isNewUser) {
-                db.collection("User").doc(user.uid).set({
+                let userRef = db.collection("User").doc(user.uid);
+                let favouritesCollection = userRef.collection("Favourites");
+
+                let buildingDoc = favouritesCollection.doc("Buildings");
+                let classroomDoc = favouritesCollection.doc("Classroom");
+                let washroomRoomDoc = favouritesCollection.doc("Washroom");
+                let waterFountainDoc = favouritesCollection.doc("WaterFountain")
+                let microwaveDoc = favouritesCollection.doc("Microwave");
+
+                //This creates empty documents for data to be LATER stored in (when they favourite a place)
+                buildingDoc.set({});
+                classroomDoc.set({});
+                washroomRoomDoc.set({});
+                waterFountainDoc.set({});
+                microwaveDoc.set({});
+
+                userRef.set({
                     email: user.email,
                 }).then(function () {
                     console.log("New user added to firestore");
-                    window.location.assign("/home");
+                    //window.location.assign("/home");
                 }).catch(function (error) {
                     console.log("Error adding new user: " + error);
                 });
@@ -24,7 +40,7 @@ var uiConfig = {
         }
     },
     signInFlow: 'popup',
-    signInSuccessUrl: "home",
+    //signInSuccessUrl: "home",
     signInOptions: [
         // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         // firebase.auth.FacebookAuthProvider.PROVIDER_ID,

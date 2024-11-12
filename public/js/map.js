@@ -1,27 +1,6 @@
 import apiKey from "./GoogleAPI_BBY4.js";
 window.map;
 
-const washroomImg = document.createElement("img");
-washroomImg.src = "/images/WashroomIcon.png";
-washroomImg.style.height = "70px";
-
-const waterFountainImg = document.createElement("img");
-waterFountainImg.src = "/images/WaterFountainIcon.png";
-waterFountainImg.style.height = "70px";
-
-const microwaveImg = document.createElement("img");
-microwaveImg.src = "/images/MicrowaveIcon.png";
-microwaveImg.style.height = "70px";
-
-window.placeMarkers = async function (lat, lng) {
-    let { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-    const markers = new AdvancedMarkerElement({
-        map: window.map,
-        position: { lat: lat, lng: lng },
-        content: microwaveImg.cloneNode(),
-    })
-}
-
 window.initMap = function () {
     const bounds = {
         north: 49.254794,
@@ -64,6 +43,8 @@ window.onMarkerClicked = function (data, key) {
         let infoCard = document.getElementById("infoCard");
 
         infoCard.getElementsByClassName("card-title")[0].innerHTML = key;
+
+        document.getElementById("")
         document.getElementById("backButton").addEventListener("click", function(event) {
             goBack(previousPosition, previousZoom);
         });

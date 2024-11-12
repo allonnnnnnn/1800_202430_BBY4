@@ -14,6 +14,11 @@ async function readAllBuilding() {
             content: labelElement,
             gmpClickable: true
         });
+
+        window.map.addListener("zoom_changed", () => {
+            let currentZoom = window.map.getZoom();
+            buildingMarker.map = currentZoom >= 17 ? map : null;
+        });
         
         buildingMarker.addListener("click", function() {
             window.onMarkerClicked(buildingSnap.data(), key);
@@ -50,10 +55,15 @@ async function readAllWaterFountains() {
         waterFountainImg.style.height = "40px";
 
         let { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-        new AdvancedMarkerElement({
+        let newMarker = new AdvancedMarkerElement({
             map: window.map,
             position: { lat: fountainsSnap.data()[key].latitude, lng: fountainsSnap.data()[key].longitude },
             content: waterFountainImg
+        })
+
+        window.map.addListener("zoom_changed", () => {
+            console.log(map.getZoom());
+            newMarker.map = map.getZoom() > 18 ? map : null;
         })
     }
 }
