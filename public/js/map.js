@@ -34,8 +34,6 @@ function LoadGoogleMaps() {
 LoadGoogleMaps();
 
 window.onMarkerClicked = function (snap, key) {
-    let previousPosition = window.map.getCenter();
-    let previousZoom = window.map.getZoom();
     let snapData = snap.data();
 
     window.map.zoom = 20;
@@ -54,19 +52,16 @@ window.onMarkerClicked = function (snap, key) {
             });
         });
         document.getElementById("backButton").addEventListener("click", function(event) {
-            goBack(previousPosition, previousZoom);
+            goBack();
         });
         window.map.addListener("click", function(event) {
-            goBack(previousPosition, previousZoom);
+            goBack();
         })
     });
 }
 
-function goBack(previousPosition, previousZoom) {
+function goBack() {
     google.maps.event.clearListeners(window.map, "click");
     document.getElementById("infoCard-goes-here").innerHTML = "";
-
-    window.map.panTo(previousPosition);
-    window.map.setZoom(previousZoom);
 }
 

@@ -1,3 +1,5 @@
+let markers = [];
+
 async function readAllBuilding() {
     let buildingRef = db.collection("Features").doc("Buildings");
     let buildingSnap = await buildingRef.get();
@@ -14,6 +16,7 @@ async function readAllBuilding() {
             content: labelElement,
             gmpClickable: true
         });
+        markers.push(buildingMarker);
 
         window.map.addListener("zoom_changed", () => {
             let currentZoom = window.map.getZoom();
@@ -24,6 +27,7 @@ async function readAllBuilding() {
             window.onMarkerClicked(buildingSnap, key);
         });
     }
+    readFavourites();
 }
 readAllBuilding()
 
@@ -57,14 +61,34 @@ async function readAllWaterFountains() {
         let { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
         let newMarker = new AdvancedMarkerElement({
             map: window.map,
-            position: { lat: fountainsSnap.data()[key].latitude, lng: fountainsSnap.data()[key].longitude },
+            position: {lat: fountainsSnap.data()[key].latitude, lng: fountainsSnap.data()[key].longitude},
             content: waterFountainImg
         })
+        markers.push(newMarker);
 
         window.map.addListener("zoom_changed", () => {
-            console.log(map.getZoom());
             newMarker.map = map.getZoom() > 18 ? map : null;
-        })
+        });
     }
+    readFavourites();
 }
 readAllWaterFountains();
+
+function readFavourites() {
+    firebase.auth().onAuthStateChanged((user) => {
+        db.collection("User").doc(user.uid).collection("Favourites").get()
+        .then(function(snap) {
+            snap.forEach(document => {
+                for (const key in document.data()) {
+                    for (let i = 0; i < markers.length; i++) {
+                        let foundMarker = markers[i];
+                        if (document.data()[key].lat == markers[i].position.lat && document.data()[key].lng == markers[i].position.lng) {
+                            foundMarker.content.style.color = "rgb(218,165,32)";
+                        }
+                    }
+                }
+            });
+        });
+    });
+}
+

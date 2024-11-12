@@ -10,7 +10,6 @@ function displayFavourites() {
                     const newcard = listTemplate.content.cloneNode(true);
                     newcard.querySelector('.building').innerHTML = key;
                     
-
                     document.getElementById("Buildings-go-here").appendChild(newcard);
                     const appendedCard = document.getElementById("Buildings-go-here").lastElementChild;
                     let removeButton = appendedCard.querySelector('.btn');
