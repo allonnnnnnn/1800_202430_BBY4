@@ -55,10 +55,29 @@ function LoadGoogleMaps() {
 LoadGoogleMaps();
 
 window.onMarkerClicked = function (data, key) {
+    let previousPosition = window.map.getCenter();
+    let previousZoom = window.map.getZoom();
+
     window.map.zoom = 20;
     window.map.panTo({ lat: data[key].latitude, lng: data[key].longitude + 0.00015 });
     $("#infoCard-goes-here").load("/html/infoCard.html", function () {
-        document.getElementById("infoCard").getElementsByClassName("card-title")[0].innerHTML = key;
+        let infoCard = document.getElementById("infoCard");
+
+        infoCard.getElementsByClassName("card-title")[0].innerHTML = key;
+        document.getElementById("backButton").addEventListener("click", function(event) {
+            goBack(previousPosition, previousZoom);
+        });
+        window.map.addListener("click", function(event) {
+            goBack(previousPosition, previousZoom);
+        })
     });
+}
+
+function goBack(previousPosition, previousZoom) {
+    google.maps.event.clearListeners(window.map, "click");
+    document.getElementById("infoCard-goes-here").innerHTML = "";
+
+    window.map.panTo(previousPosition);
+    window.map.setZoom(previousZoom);
 }
 

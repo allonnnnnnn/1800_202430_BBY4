@@ -21,7 +21,7 @@ img {
     justify-content: space-between;
 }
 
-#infoCardButtons button {
+#infoCardButtons button, #backButton button {
     max-width: 43px;
     max-height: 43px;
     margin: auto 5px;
