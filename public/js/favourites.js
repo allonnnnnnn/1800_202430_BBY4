@@ -1,29 +1,23 @@
-async function displayFav(collection) {
-
+function displayFavourites() {
     let listTemplate = document.getElementById("listTemplate");
 
-    firebase.auth().onAuthStateChanged(async (user) => {
+    firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            db.collection("User").doc(user).collection("Favourites").get()
-                .then((allFav) => {
-                    allFav.forEach(doc => {
-                        const buliding = doc.data().Building;
-                        const classroom = doc.data().Classroom
+            db.collection("User").doc(user.uid).collection("Favourites").doc("Buildings").get()
+                .then((doc) => {
+                    for (const key in doc.data()) {
 
                         const newcard = listTemplate.content.cloneNode(true);
-                        newcard.querySelector('.building').innerHTML = buliding;
-                        newcard.querySelector('.classroom').innerHTML = classroom;
-                        console.log(collection);
-                        document.getElementById(collection + "-go-here").appendChild(newcard);
-                    })
+                        newcard.querySelector('.building').innerHTML = key;
+                        document.getElementById("Buildings-go-here").appendChild(newcard);
+                    }
                 })
         } else {
             console.log("user is not login");
-    }
+        }
     });
-
 }
-displayFav("Favourites");
+displayFavourites();
 
 function addFav() {
     if (user) {
