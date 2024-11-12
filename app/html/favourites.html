@@ -41,7 +41,10 @@
 <body>
 
   <template id="listTemplate">
-    <li class="list-group-item"><span class="building">Building</span></li>
+    <li class="list-group-item">
+      <span class="building">Building</span>
+      <button id="removeButton" type="button" class="btn btn-secondary btn-sm float-end">Remove</button>
+    </li>
   </template>
   <!------------------------------>
   <!-- Your HTML Layout go here -->
@@ -58,12 +61,9 @@
     </div>
     <ul class="list-group list-group-flush ">
       <div id="Buildings-go-here" class="cols row-cols-auto"></div>
-
     </ul>
     <ul class="list-group" style="list-style: none;">
       <li>
-        <button type="button" class="btn btn-primary btn-sm" onclick="addFav()">Add</button>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="removeFav()">Remove</button>
       </li>
     </ul>
   </div>
@@ -86,10 +86,9 @@
   <!---------------------------------------------->
   <!-- Your own JavaScript functions go here    -->
   <!---------------------------------------------->
-
   <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
   <script src="/js/authentication.js"></script>
-  <script src="/js/favourites.js"></script>
+  <script src="/js/favourites.js" type="module"></script>
 
 </body>
 
