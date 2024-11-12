@@ -21,7 +21,7 @@ async function readAllBuilding() {
         });
         
         buildingMarker.addListener("click", function() {
-            window.onMarkerClicked(buildingSnap.data(), key);
+            window.onMarkerClicked(buildingSnap, key);
         });
     }
 }

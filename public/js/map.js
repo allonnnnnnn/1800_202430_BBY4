@@ -33,18 +33,26 @@ function LoadGoogleMaps() {
 }
 LoadGoogleMaps();
 
-window.onMarkerClicked = function (data, key) {
+window.onMarkerClicked = function (snap, key) {
     let previousPosition = window.map.getCenter();
     let previousZoom = window.map.getZoom();
+    let snapData = snap.data();
 
     window.map.zoom = 20;
-    window.map.panTo({ lat: data[key].latitude, lng: data[key].longitude + 0.00015 });
+    window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
     $("#infoCard-goes-here").load("/html/infoCard.html", function () {
         let infoCard = document.getElementById("infoCard");
 
         infoCard.getElementsByClassName("card-title")[0].innerHTML = key;
 
-        document.getElementById("")
+        //Check if this user already favourited this place. If so, change the gui to "Favourited" which when
+        //pressed will unfavourite it (remove it from the database)
+
+        document.getElementById("favouriteButton").addEventListener("click", function() {
+            db.collection("User").doc(firebase.auth().currentUser.uid).collection("Favourites").doc(snap.id).update({
+                [key]: {lat: snapData[key].latitude, lng: snapData[key].longitude}
+            });
+        });
         document.getElementById("backButton").addEventListener("click", function(event) {
             goBack(previousPosition, previousZoom);
         });

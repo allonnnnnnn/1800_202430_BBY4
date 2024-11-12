@@ -25,7 +25,7 @@ var uiConfig = {
                     email: user.email,
                 }).then(function () {
                     console.log("New user added to firestore");
-                    //window.location.assign("/home");
+                    window.location.assign("/home");
                 }).catch(function (error) {
                     console.log("Error adding new user: " + error);
                 });
@@ -40,7 +40,7 @@ var uiConfig = {
         }
     },
     signInFlow: 'popup',
-    //signInSuccessUrl: "home",
+    signInSuccessUrl: "home",
     signInOptions: [
         // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
