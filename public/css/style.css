@@ -85,3 +85,7 @@ body.sidebar-open {
     color: white;  
 }
 
+ul div{
+    max-height: 25rem;
+    overflow: auto;
+}
