@@ -85,7 +85,7 @@ body.sidebar-open {
     color: white;  
 }
 
-div ul{
-    height: 300px;
-    overflow: scroll;
+ul div{
+    max-height: 25rem;
+    overflow: auto;
 }
