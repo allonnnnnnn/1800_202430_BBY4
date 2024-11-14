@@ -24,6 +24,9 @@ window.initMap = function () {
     window.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 }
 
+/**
+ * This will take the API key and load in the Map inside of main.html
+ */
 function LoadGoogleMaps() {
     let script = document.createElement("script");
     script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=" + apiKey + "&loading=async&callback=initMap");
@@ -33,6 +36,11 @@ function LoadGoogleMaps() {
 }
 LoadGoogleMaps();
 
+/**
+ * Gives functionality to markers like clickable building names. This also gives
+ * @param {*} snap 
+ * @param {*} key 
+ */
 window.onMarkerClicked = function (snap, key) {
     let snapData = snap.data();
 
@@ -40,15 +48,49 @@ window.onMarkerClicked = function (snap, key) {
     window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
     $("#infoCard-goes-here").load("/html/infoCard.html", function () {
         let infoCard = document.getElementById("infoCard");
+        let foundMarker = returnMarker(snapData[key].latitude,snapData[key].longitude);
+        console.log(foundMarker.favourited);
+        if (foundMarker == null) {
+            console.log("Could not find the marker");
+            return;
+        }
+
+        if (foundMarker.favourited) {
+            document.getElementById("favouriteButtonText").innerText = "Unfavourite Place";
+        } else {
+            document.getElementById("favouriteButtonText").innerText = "Favourite Place";
+        }
 
         infoCard.getElementsByClassName("card-title")[0].innerHTML = key;
-
+        
         //Check if this user already favourited this place. If so, change the gui to "Favourited" which when
-        //pressed will unfavourite it (remove it from the database)
+        //pressing it will unfavourite it (remove it from the database)
 
+        //All this code below adds functionality to the buttons on the infocard
+        document.getElementById("directionButton").addEventListener("click", function() {
+            
+        });
         document.getElementById("favouriteButton").addEventListener("click", function() {
-            db.collection("User").doc(firebase.auth().currentUser.uid).collection("Favourites").doc(snap.id).update({
-                [key]: {lat: snapData[key].latitude, lng: snapData[key].longitude}
+            let updatingDocument = db.collection("User").doc(firebase.auth().currentUser.uid).collection("Favourites").doc(snap.id);
+            
+            
+            //When the location is NOT favourited
+            if (!foundMarker.favourited) {
+                document.getElementById("favouriteButtonText").innerText = "Unfavourite Place";
+                updatingDocument.update({
+                    [key]: {lat: snapData[key].latitude, lng: snapData[key].longitude}
+                }).then( () => {
+                    displayFavouriteOnMap(snapData[key].latitude,snapData[key].longitude);
+                });
+                return;
+            }
+
+            //This happens when the location IS favourited (remove it from being favourited)
+            document.getElementById("favouriteButtonText").innerText = "Favourite Place";
+            updatingDocument.update({
+                [key]: firebase.firestore.FieldValue.delete()
+            }).then( () => {
+                displayFavouriteOnMap(snapData[key].latitude,snapData[key].longitude);
             });
         });
         document.getElementById("backButton").addEventListener("click", function(event) {

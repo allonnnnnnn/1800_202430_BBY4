@@ -16,14 +16,15 @@ async function readAllBuilding() {
             content: labelElement,
             gmpClickable: true
         });
+        buildingMarker.favourited = false;
         markers.push(buildingMarker);
 
         window.map.addListener("zoom_changed", () => {
             let currentZoom = window.map.getZoom();
             buildingMarker.map = currentZoom >= 17 ? map : null;
         });
-        
-        buildingMarker.addListener("click", function() {
+
+        buildingMarker.addListener("click", function () {
             window.onMarkerClicked(buildingSnap, key);
         });
     }
@@ -61,7 +62,7 @@ async function readAllWaterFountains() {
         let { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
         let newMarker = new AdvancedMarkerElement({
             map: window.map,
-            position: {lat: fountainsSnap.data()[key].latitude, lng: fountainsSnap.data()[key].longitude},
+            position: { lat: fountainsSnap.data()[key].latitude, lng: fountainsSnap.data()[key].longitude },
             content: waterFountainImg
         })
         markers.push(newMarker);
@@ -70,25 +71,43 @@ async function readAllWaterFountains() {
             newMarker.map = map.getZoom() > 18 ? map : null;
         });
     }
-    readFavourites();
 }
 readAllWaterFountains();
 
+/**
+ * This will read the user's favourites and change those markers to a different colour
+ */
 function readFavourites() {
     firebase.auth().onAuthStateChanged((user) => {
         db.collection("User").doc(user.uid).collection("Favourites").get()
-        .then(function(snap) {
-            snap.forEach(document => {
-                for (const key in document.data()) {
-                    for (let i = 0; i < markers.length; i++) {
-                        let foundMarker = markers[i];
-                        if (document.data()[key].lat == markers[i].position.lat && document.data()[key].lng == markers[i].position.lng) {
-                            foundMarker.content.style.color = "rgb(218,165,32)";
-                        }
+            .then(function (snap) {
+                snap.forEach(document => {
+                    for (const key in document.data()) {
+                        displayFavouriteOnMap(document.data()[key].lat, document.data()[key].lng);
                     }
-                }
+                });
             });
-        });
     });
+}
+
+function displayFavouriteOnMap(locationLat, locationLng) {
+    let foundMarker = returnMarker(locationLat, locationLng);
+    if (!foundMarker.favourited) {
+        foundMarker.favourited = true;
+        foundMarker.content.style.color = "rgb(218,165,32)";
+    } else {
+        foundMarker.favourited = false;
+        foundMarker.content.style.color = "rgb(0,0,0)";
+    }
+}
+
+function returnMarker(locationLat, locationLng) {
+    for (let i = 0; i < markers.length; i++) {
+        let foundMarker = markers[i];
+        if (locationLat == foundMarker.position.lat && locationLng == foundMarker.position.lng) {
+            return foundMarker;
+        }
+    }
+    return null;
 }
 
