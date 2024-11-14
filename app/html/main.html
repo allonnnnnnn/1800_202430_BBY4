@@ -42,18 +42,50 @@
 
   <div id="sidebarPlaceholder"></div>
 
-  <div class="container d-flex justify-content-center mt-5 bg-transparent position-absolute z-3">
-    <div class="input-group rounded" style="max-width: 400px; width: 100%;">
-      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-        aria-describedby="search-addon" id="search-input" />
-      <span class="input-group-text border-0" id="search-addon">
-        <button onclick="writeSearch()" class="btn btn-link p-0">
-          <i class="fas fa-search"></i>
-        </button>
-      </span>
+  <!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">It doesn't seem that you're on campus right now :(</h5>
+        </div>
+        <div class="modal-body">
+          if you want to find the nearest facility to you, please be on BCIT's Burnaby campus
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
   </div>
 
+  <template id="listTemplate">
+    <li class="list-group-item">
+      <p>Hi</p>
+    </li>
+  </template>
+
+  <div class="container position-absolute z-3">
+    <div class="d-flex justify-content-center mt-5 bg-transparent  ">
+      <div class="input-group rounded" style="max-width: 400px; width: 100%;">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+          aria-describedby="search-addon" id="search-input" />
+        <span class="input-group-text border-0" id="search-addon">
+          <button onclick="writeSearch()" class="btn btn-link p-0">
+            <i class="fas fa-search"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+    <ul class="list-group list-group-flush" style="max-width: 400px; margin: auto;">
+      <div id="search-results-go-here" class="cols row-cols-auto">
+        
+      </div>
+    </ul>
+  </div>
   <div id="infoCard-goes-here"></div>
 
   <div id="map" style="height: 85vh"></div>
@@ -67,7 +99,7 @@
   <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
   <script src="/js/authentication.js"></script>
   <script src="/js/map.js" type="module"></script>
-  <script src="/js/datastore.js"></script> 
+  <script src="/js/datastore.js"></script>
 
 </body>
 

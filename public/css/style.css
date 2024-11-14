@@ -2,7 +2,7 @@ img {
     display: block;
     max-width: 50px;
     height: auto;
-  }
+}
 
 #map {
     height: 705px;
@@ -10,8 +10,8 @@ img {
 
 #infoCard {
     padding: 0 15px;
-    min-width: 208px; 
-    width: 40vw; 
+    min-width: 208px;
+    width: 40vw;
     height: 85vh;
     right: 0;
 }
@@ -39,10 +39,12 @@ img {
 .navbar {
     background-color: rgb(0, 0, 198);
 }
+
 .navbar .btn {
     background-color: rgb(4, 4, 29);
 }
-.navbar *{
+
+.navbar * {
     color: white;
 }
 
@@ -56,13 +58,13 @@ img {
 
 
 .sidebar {
-    height: 98.5%; 
-    width: 200px; 
+    height: 98.5%;
+    width: 200px;
     position: fixed;
     top: 0;
-    left: -200px; 
-    background-color: rgb(0, 0, 198); 
-    transition: left 0.3s ease-in-out; 
+    left: -200px;
+    background-color: rgb(0, 0, 198);
+    transition: left 0.3s ease-in-out;
     z-index: 1000;
 }
 
@@ -72,20 +74,25 @@ img {
 
 
 body.sidebar-open {
-    margin-left: 200px; 
+    margin-left: 200px;
 }
 
 
 .w3-bar-item:hover {
     background-color: rgb(0, 0, 198);
-    
-}
-.sidebar h5 {
-    text-align: center;
-    color: white;  
+
 }
 
-ul div{
+.sidebar h5 {
+    text-align: center;
+    color: white;
+}
+
+.list-group-item * {
+    margin: 0;
+}
+
+ul div {
     max-height: 25rem;
     overflow: auto;
 }

@@ -1,14 +1,14 @@
 import apiKey from "./GoogleAPI_BBY4.js";
 window.map;
 
-window.initMap = function () {
-    const bounds = {
-        north: 49.254794,
-        east: -122.993394,
-        south: 49.241543,
-        west: -123.004505
-    };
+var bounds = {
+    north: 49.254794,
+    east: -122.993394,
+    south: 49.241543,
+    west: -123.004505
+};
 
+window.initMap = function () {
     const mapOptions = {
         center: { lat: 49.250019, lng: -123.002707 },
         zoom: 15,
@@ -22,6 +22,8 @@ window.initMap = function () {
     };
 
     window.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    loadGeolocater();
 }
 
 /**
@@ -37,6 +39,32 @@ function LoadGoogleMaps() {
 LoadGoogleMaps();
 
 /**
+ * Loads the geo geolocater to find where the user is
+ */
+function loadGeolocater() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            if (position.coords.latitude > bounds.north || position.coords.latitude < bounds.south || position.coords.longitude < bounds.west || position.coords.longitude > bounds.east) {
+                const myModal = new bootstrap.Modal(document.getElementById('warningModal'));
+                myModal.show();
+
+                document.getElementById('warningModal').querySelectorAll("Button")[0].addEventListener("click", function () {
+                    myModal.hide();
+                })
+                return;
+            }
+
+            const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            window.map.setCenter(pos);
+        });
+    }
+}
+
+/**
  * Gives functionality to markers like clickable building names. This also gives
  * @param {*} snap 
  * @param {*} key 
@@ -48,8 +76,8 @@ window.onMarkerClicked = function (snap, key) {
     window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
     $("#infoCard-goes-here").load("/html/infoCard.html", function () {
         let infoCard = document.getElementById("infoCard");
-        let foundMarker = returnMarker(snapData[key].latitude,snapData[key].longitude);
-        console.log(foundMarker.favourited);
+        let foundMarker = returnMarker(snapData[key].latitude, snapData[key].longitude);
+
         if (foundMarker == null) {
             console.log("Could not find the marker");
             return;
@@ -62,25 +90,24 @@ window.onMarkerClicked = function (snap, key) {
         }
 
         infoCard.getElementsByClassName("card-title")[0].innerHTML = key;
-        
+
         //Check if this user already favourited this place. If so, change the gui to "Favourited" which when
         //pressing it will unfavourite it (remove it from the database)
 
         //All this code below adds functionality to the buttons on the infocard
-        document.getElementById("directionButton").addEventListener("click", function() {
-            
+        document.getElementById("directionButton").addEventListener("click", function () {
+
         });
-        document.getElementById("favouriteButton").addEventListener("click", function() {
+        document.getElementById("favouriteButton").addEventListener("click", function () {
             let updatingDocument = db.collection("User").doc(firebase.auth().currentUser.uid).collection("Favourites").doc(snap.id);
-            
-            
+
             //When the location is NOT favourited
             if (!foundMarker.favourited) {
                 document.getElementById("favouriteButtonText").innerText = "Unfavourite Place";
                 updatingDocument.update({
-                    [key]: {lat: snapData[key].latitude, lng: snapData[key].longitude}
-                }).then( () => {
-                    displayFavouriteOnMap(snapData[key].latitude,snapData[key].longitude);
+                    [key]: { lat: snapData[key].latitude, lng: snapData[key].longitude }
+                }).then(() => {
+                    displayFavouriteOnMap(snapData[key].latitude, snapData[key].longitude);
                 });
                 return;
             }
@@ -89,14 +116,14 @@ window.onMarkerClicked = function (snap, key) {
             document.getElementById("favouriteButtonText").innerText = "Favourite Place";
             updatingDocument.update({
                 [key]: firebase.firestore.FieldValue.delete()
-            }).then( () => {
-                displayFavouriteOnMap(snapData[key].latitude,snapData[key].longitude);
+            }).then(() => {
+                displayFavouriteOnMap(snapData[key].latitude, snapData[key].longitude);
             });
         });
-        document.getElementById("backButton").addEventListener("click", function(event) {
+        document.getElementById("backButton").addEventListener("click", function (event) {
             goBack();
         });
-        window.map.addListener("click", function(event) {
+        window.map.addListener("click", function (event) {
             goBack();
         })
     });
@@ -106,4 +133,21 @@ function goBack() {
     google.maps.event.clearListeners(window.map, "click");
     document.getElementById("infoCard-goes-here").innerHTML = "";
 }
+
+document.getElementsByTagName("input")[0].addEventListener("input", function (event) {
+    let searchList = document.getElementById("search-results-go-here");
+    searchList.innerHTML = "";
+
+    let input = document.getElementsByTagName("input")[0].value.toLowerCase().trim();
+
+    const filteredMarkers = window.markers.filter(marker => marker.title.toLowerCase().includes(input));
+
+    filteredMarkers.forEach(marker => {
+        let templateClone = document.getElementById("listTemplate").content.cloneNode(true);
+        templateClone.querySelector("p").innerHTML = marker.title;
+        console.log(marker);
+        searchList.appendChild(templateClone);
+    }); 
+});
+
 

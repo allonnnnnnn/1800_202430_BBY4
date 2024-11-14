@@ -1,4 +1,4 @@
-let markers = [];
+window.markers = [];
 
 async function readAllBuilding() {
     let buildingRef = db.collection("Features").doc("Buildings");
@@ -7,18 +7,20 @@ async function readAllBuilding() {
     for (const key in buildingSnap.data()) {
         let labelElement = document.createElement("div");
         labelElement.innerText = key;
-        labelElement.style = "font-size: 25pt";
+        labelElement.style = "font-size: 18pt";
 
         let { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
         let buildingMarker = new AdvancedMarkerElement({
             map: window.map,
             position: { lat: buildingSnap.data()[key].latitude, lng: buildingSnap.data()[key].longitude },
             content: labelElement,
-            gmpClickable: true
+            gmpClickable: true,
+            title: key
         });
         buildingMarker.favourited = false;
         markers.push(buildingMarker);
 
+        buildingMarker.map = map.getZoom() >= 17 ? map : null;
         window.map.addListener("zoom_changed", () => {
             let currentZoom = window.map.getZoom();
             buildingMarker.map = currentZoom >= 17 ? map : null;
@@ -31,24 +33,6 @@ async function readAllBuilding() {
     readFavourites();
 }
 readAllBuilding()
-
-function writeBuildings(buildingName, lat, lng) {
-    let geopoint = new firebase.firestore.GeoPoint(lat, lng);
-    let doc = db.collection("Features").doc("WaterFountains").set({
-        [buildingName]: geopoint
-    });
-
-}
-writeBuildings("SW05", 49, 33);
-
-function writeWaterFountains(fountainName, lat, lng) {
-    let geopoint = new firebase.firestore.GeoPoint(lat, lng);
-    let doc = db.collection("Features").doc("WaterFountains").set({
-        [fountainName]: geopoint
-    });
-
-}
-writeWaterFountains("SW03_1", 49.250034, -123.002498);
 
 async function readAllWaterFountains() {
     let fountainsRef = db.collection("Features").doc("WaterFountains");
@@ -65,8 +49,10 @@ async function readAllWaterFountains() {
             position: { lat: fountainsSnap.data()[key].latitude, lng: fountainsSnap.data()[key].longitude },
             content: waterFountainImg
         })
+        newMarker.favourited = false;
         markers.push(newMarker);
 
+        newMarker.map = map.getZoom() > 18 ? map : null;
         window.map.addListener("zoom_changed", () => {
             newMarker.map = map.getZoom() > 18 ? map : null;
         });
@@ -92,6 +78,11 @@ function readFavourites() {
 
 function displayFavouriteOnMap(locationLat, locationLng) {
     let foundMarker = returnMarker(locationLat, locationLng);
+    if (foundMarker == null) {
+        console.log("Couldn't find marker");
+        return;
+    }
+
     if (!foundMarker.favourited) {
         foundMarker.favourited = true;
         foundMarker.content.style.color = "rgb(218,165,32)";
