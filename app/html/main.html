@@ -63,7 +63,7 @@
   </div>
 
   <template id="listTemplate">
-    <li class="list-group-item">
+    <li id="onHover" class="list-group-item">
       <p>Hi</p>
     </li>
   </template>
@@ -71,7 +71,7 @@
   <div class="container position-absolute z-3">
     <div class="d-flex justify-content-center mt-5 bg-transparent  ">
       <div class="input-group rounded" style="max-width: 400px; width: 100%;">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+        <input type="search" class="form-control rounded" placeholder="Search..." aria-label="Search"
           aria-describedby="search-addon" id="search-input" />
         <span class="input-group-text border-0" id="search-addon">
           <button onclick="writeSearch()" class="btn btn-link p-0">
@@ -81,9 +81,7 @@
       </div>
     </div>
     <ul class="list-group list-group-flush" style="max-width: 400px; margin: auto;">
-      <div id="search-results-go-here" class="cols row-cols-auto">
-        
-      </div>
+      <div id="search-results-go-here" class="cols row-cols-auto"></div>
     </ul>
   </div>
   <div id="infoCard-goes-here"></div>

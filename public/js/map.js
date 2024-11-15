@@ -73,7 +73,7 @@ window.onMarkerClicked = function (snap, key) {
     let snapData = snap.data();
 
     window.map.zoom = 20;
-    window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
+    // window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
     $("#infoCard-goes-here").load("/html/infoCard.html", function () {
         let infoCard = document.getElementById("infoCard");
         let foundMarker = returnMarker(snapData[key].latitude, snapData[key].longitude);
@@ -105,7 +105,7 @@ window.onMarkerClicked = function (snap, key) {
             if (!foundMarker.favourited) {
                 document.getElementById("favouriteButtonText").innerText = "Unfavourite Place";
                 updatingDocument.update({
-                    [key]: { lat: snapData[key].latitude, lng: snapData[key].longitude }
+                    [key]: {lat: snapData[key].latitude, lng: snapData[key].longitude}
                 }).then(() => {
                     displayFavouriteOnMap(snapData[key].latitude, snapData[key].longitude);
                 });
@@ -134,6 +134,10 @@ function goBack() {
     document.getElementById("infoCard-goes-here").innerHTML = "";
 }
 
+document.getElementsByTagName("input")[0].addEventListener("click", function (event) {
+    document.getElementsByTagName("input")[0].value = "";
+});
+
 document.getElementsByTagName("input")[0].addEventListener("input", function (event) {
     let searchList = document.getElementById("search-results-go-here");
     searchList.innerHTML = "";
@@ -145,8 +149,21 @@ document.getElementsByTagName("input")[0].addEventListener("input", function (ev
     filteredMarkers.forEach(marker => {
         let templateClone = document.getElementById("listTemplate").content.cloneNode(true);
         templateClone.querySelector("p").innerHTML = marker.title;
-        console.log(marker);
         searchList.appendChild(templateClone);
+
+        let appendedClone = document.getElementById("search-results-go-here").lastElementChild;
+        appendedClone.addEventListener("click", function() {
+            // console.log(marker);
+            window.map.zoom = 20;
+            window.map.panTo({ lat: marker.position.lat, lng: marker.position.lng + 0.00015 });
+
+            searchList.innerHTML = "";
+            document.getElementsByTagName("input")[0].value = marker.title;
+            db.collection("Features").doc("Buildings").get()
+                .then(function(buildingDoc) {
+                    window.onMarkerClicked(buildingDoc,marker.title);
+                });
+        })
     }); 
 });
 
