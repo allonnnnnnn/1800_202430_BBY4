@@ -73,7 +73,7 @@ window.onMarkerClicked = function (snap, key) {
     let snapData = snap.data();
 
     window.map.zoom = 20;
-    // window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
+    window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
     $("#infoCard-goes-here").load("/html/infoCard.html", function () {
         let infoCard = document.getElementById("infoCard");
         let foundMarker = returnMarker(snapData[key].latitude, snapData[key].longitude);
@@ -105,7 +105,7 @@ window.onMarkerClicked = function (snap, key) {
             if (!foundMarker.favourited) {
                 document.getElementById("favouriteButtonText").innerText = "Unfavourite Place";
                 updatingDocument.update({
-                    [key]: {lat: snapData[key].latitude, lng: snapData[key].longitude}
+                    [key]: { lat: snapData[key].latitude, lng: snapData[key].longitude }
                 }).then(() => {
                     displayFavouriteOnMap(snapData[key].latitude, snapData[key].longitude);
                 });
@@ -144,27 +144,37 @@ document.getElementsByTagName("input")[0].addEventListener("input", function (ev
 
     let input = document.getElementsByTagName("input")[0].value.toLowerCase().trim();
 
-    const filteredMarkers = window.markers.filter(marker => marker.title.toLowerCase().includes(input));
+    if (input.length == 0) return;
+
+    const filteredMarkers = window.markers.filter((marker) => {
+        return marker.title.toLowerCase().includes(input);
+    });
+    filteredMarkers.sort((marker1, marker2) => {
+        if (marker1.title.toLowerCase() > marker2.title.toLowerCase()) return 1;
+        if (marker1.title.toLowerCase() < marker2.title.toLowerCase()) return -1;
+        return 0;
+    });
 
     filteredMarkers.forEach(marker => {
+        if (marker.title == "") return;
+
         let templateClone = document.getElementById("listTemplate").content.cloneNode(true);
         templateClone.querySelector("p").innerHTML = marker.title;
         searchList.appendChild(templateClone);
 
         let appendedClone = document.getElementById("search-results-go-here").lastElementChild;
-        appendedClone.addEventListener("click", function() {
-            // console.log(marker);
+        appendedClone.addEventListener("click", function () {
             window.map.zoom = 20;
             window.map.panTo({ lat: marker.position.lat, lng: marker.position.lng + 0.00015 });
 
             searchList.innerHTML = "";
             document.getElementsByTagName("input")[0].value = marker.title;
             db.collection("Features").doc("Buildings").get()
-                .then(function(buildingDoc) {
-                    window.onMarkerClicked(buildingDoc,marker.title);
+                .then(function (buildingDoc) {
+                    window.onMarkerClicked(buildingDoc, marker.title);
                 });
         })
-    }); 
+    });
 });
 
 
