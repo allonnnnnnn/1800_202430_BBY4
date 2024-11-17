@@ -95,8 +95,8 @@ window.onMarkerClicked = function (snap, key) {
         //pressing it will unfavourite it (remove it from the database)
 
         //All this code below adds functionality to the buttons on the infocard
-        document.getElementById("directionButton").addEventListener("click", function () {
-
+        document.getElementById("directionButton").addEventListener("click", () => {
+            popUpDirectionsWindow(foundMarker);
         });
         document.getElementById("favouriteButton").addEventListener("click", function () {
             let updatingDocument = db.collection("User").doc(firebase.auth().currentUser.uid).collection("Favourites").doc(snap.id);
@@ -129,6 +129,18 @@ window.onMarkerClicked = function (snap, key) {
     });
 }
 
+function popUpDirectionsWindow(origin, destination) {
+    goBack();
+    document.getElementById("searchBar").style = "display: none";
+
+    document.getElementById("searchBarDirections").style = "display: block";
+
+    document.getElementById("exitDirections").addEventListener("click", function() {
+        document.getElementById("searchBar").style = "display: block";
+        document.getElementById("searchBarDirections").style = "display: none";
+    });
+}
+
 function goBack() {
     google.maps.event.clearListeners(window.map, "click");
     document.getElementById("infoCard-goes-here").innerHTML = "";
@@ -138,14 +150,41 @@ document.getElementsByTagName("input")[0].addEventListener("click", function (ev
     document.getElementsByTagName("input")[0].value = "";
 });
 
-document.getElementsByTagName("input")[0].addEventListener("input", function (event) {
+window.onSearchBarFocus = function (inputElement) {
+    inputElement.addEventListener("input", function (event) {
+        if (inputElement.id == "searchBarInput") {
+            displaySearchResult(inputElement, document.getElementById("search-results-go-here"), (marker) => {
+                window.map.zoom = 20;
+                window.map.panTo({lat: marker.position.lat, lng: marker.position.lng + 0.00015});
+                
+                db.collection("Features").doc("Buildings").get()
+                    .then(function (buildingDoc) {
+                        window.onMarkerClicked(buildingDoc, marker.title);
+                    });
+            });
+        } else if (inputElement.id == "originInput") {
+            displaySearchResult(inputElement, document.getElementById("input-results-go-here"), () => {}); 
+        } else if (inputElement.id == "destinationInput") {
+            displaySearchResult(inputElement, document.getElementById("output-results-go-here"), () => {});
+        }
+    });
+}
+
+window.onSearchBarOutOfFocus = function(inputElement){
+    inputElement.removeEventListener("input", () => {});
     let searchList = document.getElementById("search-results-go-here");
     searchList.innerHTML = "";
+}
 
-    let input = document.getElementsByTagName("input")[0].value.toLowerCase().trim();
+function displaySearchResult(inputElement, outputElement, callback) {
+    let searchList = outputElement;
+    searchList.innerHTML = "";
+
+    let input = inputElement.value.toLowerCase().trim();
 
     if (input.length == 0) return;
 
+    //Will sort the markers if 
     const filteredMarkers = window.markers.filter((marker) => {
         return marker.title.toLowerCase().includes(input);
     });
@@ -162,19 +201,14 @@ document.getElementsByTagName("input")[0].addEventListener("input", function (ev
         templateClone.querySelector("p").innerHTML = marker.title;
         searchList.appendChild(templateClone);
 
-        let appendedClone = document.getElementById("search-results-go-here").lastElementChild;
-        appendedClone.addEventListener("click", function () {
-            window.map.zoom = 20;
-            window.map.panTo({ lat: marker.position.lat, lng: marker.position.lng + 0.00015 });
-
+        let appendedClone = outputElement.lastElementChild;
+        appendedClone.addEventListener("click", function() {
             searchList.innerHTML = "";
-            document.getElementsByTagName("input")[0].value = marker.title;
-            db.collection("Features").doc("Buildings").get()
-                .then(function (buildingDoc) {
-                    window.onMarkerClicked(buildingDoc, marker.title);
-                });
-        })
+            inputElement.value = marker.title;
+
+            callback(marker);
+        });
     });
-});
+}
 
 
