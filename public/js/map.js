@@ -1,5 +1,6 @@
 import apiKey from "./GoogleAPI_BBY4.js";
 window.map;
+let userMarker;
 
 const currentRoutePoints = {
     currentOrigin: null,
@@ -15,7 +16,7 @@ const bounds = {
 
 window.initMap = function () {
     const mapOptions = {
-        center: { lat: 49.250019, lng: -123.002707 },
+        center: {lat: 49.253300, lng: -123.001549},
         zoom: 15,
         mapId: "e1a7e8a6dbcb9005",
         restriction: {
@@ -27,7 +28,6 @@ window.initMap = function () {
     };
 
     window.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
     loadGeolocater();
 }
 
@@ -47,26 +47,56 @@ LoadGoogleMaps();
  * Loads the geo geolocater to find where the user is
  */
 function loadGeolocater() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            if (position.coords.latitude > bounds.north || position.coords.latitude < bounds.south || position.coords.longitude < bounds.west || position.coords.longitude > bounds.east) {
-                const myModal = new bootstrap.Modal(document.getElementById('warningModal'));
-                myModal.show();
+    const userImg = document.createElement("img");
+    userImg.src = "/images/userMarker.png";
+    userImg.style.height = "45px";
+    firebase.auth().onAuthStateChanged((user) => {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition((position) => {
+                let userLatitude = position.coords.latitude;
+                let userLongitude = position.coords.longitude;
 
-                document.getElementById('warningModal').querySelectorAll("Button")[0].addEventListener("click", function () {
-                    myModal.hide();
-                })
-                return;
-            }
+                /*These two lines are for testing purposes
+                let userLatitude = 49.251670;
+                let userLongitude = -123.003738;*/
 
-            const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
+                user.currentPosition = {latitude: userLatitude, longitude: userLongitude};
+                if (userLatitude > bounds.north || userLatitude < bounds.south || userLongitude < bounds.west || userLongitude > bounds.east) {
+                    warnUserIsOffCampus()
+                    return;
+                }
+                
+                google.maps.importLibrary("marker").then(({ AdvancedMarkerElement }) => {
+                    userMarker = new AdvancedMarkerElement({
+                        map: window.map,
+                        position: { lat: userLatitude, lng: userLongitude },
+                        content: userImg,
+                        title: "User"
+                    });
 
-            window.map.setCenter(pos);
-        });
-    }
+                    const pos = {
+                        lat: userMarker.position.lat,
+                        lng: userMarker.position.lng
+                    };
+                    
+                    window.map.setZoom(18);
+                    window.map.panTo({lat: userLatitude, lng: userLongitude});
+                });    
+            });
+        } else {
+            user.currentPosition = {latitude: 0, longitude: 0};
+            warnUserIsOffCampus();
+        }
+    });
+}
+
+function warnUserIsOffCampus() {
+    const myModal = new bootstrap.Modal(document.getElementById('warningModal'));
+    myModal.show();
+
+    document.getElementById('warningModal').querySelectorAll("Button")[0].addEventListener("click", function () {
+        myModal.hide();
+    })
 }
 
 /**
@@ -102,7 +132,7 @@ window.onMarkerClicked = function (snap, key) {
         //All this code below adds functionality to the buttons on the infocard
         document.getElementById("directionButton").addEventListener("click", () => {
             currentRoutePoints.currentOrigin = firebase.auth().currentUser.currentPosition;
-            currentRoutePoints.currentDestination = {latitude: foundMarker.position.lat, longitude: foundMarker.position.lng};
+            currentRoutePoints.currentDestination = { latitude: foundMarker.position.lat, longitude: foundMarker.position.lng };
 
             popUpDirectionsWindow(foundMarker);
         });
@@ -113,7 +143,7 @@ window.onMarkerClicked = function (snap, key) {
             if (!foundMarker.favourited) {
                 document.getElementById("favouriteButtonText").innerText = "Unfavourite Place";
                 updatingDocument.update({
-                    [key]: {lat: snapData[key].latitude, lng: snapData[key].longitude}
+                    [key]: { lat: snapData[key].latitude, lng: snapData[key].longitude }
                 }).then(() => {
                     displayFavouriteOnMap(snapData[key].latitude, snapData[key].longitude);
                 });
@@ -144,18 +174,18 @@ function popUpDirectionsWindow(assumedDestinationMarker) {
 
     document.getElementById("destinationInput").value = assumedDestinationMarker.title;
 
-    document.getElementById("calculateRoute").addEventListener("click", function() {
+    document.getElementById("calculateRoute").addEventListener("click", function () {
         calculateRoute();
     });
 
-    document.getElementById("exitDirections").addEventListener("click", function() {
+    document.getElementById("exitDirections").addEventListener("click", function () {
         document.getElementById("searchBar").style = "display: block";
         document.getElementById("searchBarDirections").style = "display: none";
     });
 }
 
 function calculateRoute() {
-    
+
 }
 
 function goBack() {
@@ -172,8 +202,8 @@ window.onSearchBarFocus = function (inputElement) {
         if (inputElement.id == "searchBarInput") {
             displaySearchResult(inputElement, document.getElementById("search-results-go-here"), (marker) => {
                 window.map.setZoom(20);
-                window.map.panTo({lat: marker.position.lat, lng: marker.position.lng + 0.00015});
-                
+                window.map.panTo({ lat: marker.position.lat, lng: marker.position.lng + 0.00015 });
+
                 db.collection("Features").doc("Buildings").get()
                     .then(function (buildingDoc) {
                         window.onMarkerClicked(buildingDoc, marker.title);
@@ -181,18 +211,18 @@ window.onSearchBarFocus = function (inputElement) {
             });
         } else if (inputElement.id == "originInput") {
             displaySearchResult(inputElement, document.getElementById("origin-results-go-here"), (marker) => {
-                currentRoutePoints.currentOrigin = {latitude: marker.position.lat, longitude: marker.position.lng};
-            }); 
+                currentRoutePoints.currentOrigin = { latitude: marker.position.lat, longitude: marker.position.lng };
+            });
         } else if (inputElement.id == "destinationInput") {
             displaySearchResult(inputElement, document.getElementById("destination-results-go-here"), (marker) => {
-                currentRoutePoints.currentDestination = {latitude: marker.position.lat, longitude: marker.position.lng};
+                currentRoutePoints.currentDestination = { latitude: marker.position.lat, longitude: marker.position.lng };
             });
         }
     });
 }
 
-window.onSearchBarOutOfFocus = function(inputElement){
-    inputElement.removeEventListener("input", () => {});
+window.onSearchBarOutOfFocus = function (inputElement) {
+    inputElement.removeEventListener("input", () => { });
     let searchList = document.getElementById("search-results-go-here");
     searchList.innerHTML = "";
 }
@@ -223,7 +253,7 @@ function displaySearchResult(inputElement, outputElement, callback) {
         searchList.appendChild(templateClone);
 
         let appendedClone = outputElement.lastElementChild;
-        appendedClone.addEventListener("click", function() {
+        appendedClone.addEventListener("click", function () {
             searchList.innerHTML = "";
             inputElement.value = marker.title;
 
@@ -232,9 +262,15 @@ function displaySearchResult(inputElement, outputElement, callback) {
     });
 }
 
-window.onDropDownButtonsClicked = function(feature) {
+window.onDropDownButtonsClicked = function (feature) {
     db.collection("Features").doc(feature).get().then((doc) => {
+        console.log("doing features thingy");
         let currentUserPosition = firebase.auth().currentUser.currentPosition;
+        if (currentUserPosition.latitude > bounds.north || currentUserPosition.latitude < bounds.south || currentUserPosition.longitude < bounds.west || currentUserPosition.longitude > bounds.east) {
+            warnUserIsOffCampus();
+            return;
+        }
+
         let closestMarker;
         let closestDistance = 100000000000;
 
@@ -242,13 +278,13 @@ window.onDropDownButtonsClicked = function(feature) {
             const latDelta = doc.data()[key].latitude - currentUserPosition.latitude;
             const lngDelta = doc.data()[key].longitude - currentUserPosition.longitude;
             const distance = calculateDistance(latDelta, lngDelta, currentUserPosition);
-            
-            if (closestMarker == null) { 
+
+            if (closestMarker == null) {
                 closestMarker = returnMarker(doc.data()[key].latitude, doc.data()[key].longitude);
                 closestDistance = distance;
                 continue;
             }
-            
+
             if (distance < closestDistance) {
                 closestDistance = distance;
                 closestMarker = returnMarker(doc.data()[key].latitude, doc.data()[key].longitude);
@@ -269,8 +305,8 @@ function calculateDistance(latDelta, lngDelta, currentUserPosition) {
     const dlng = lon2 - lon1; // Difference in longitudes
 
     const a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
-              Math.cos(lat1) * Math.cos(lat2) *
-              Math.sin(dlng / 2) * Math.sin(dlng / 2);
+        Math.cos(lat1) * Math.cos(lat2) *
+        Math.sin(dlng / 2) * Math.sin(dlng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     const distance = R * c; // Distance in kilometers

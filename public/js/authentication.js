@@ -71,8 +71,6 @@ function checkForUser() {
 
                 let username = user.displayName;
                 document.getElementById("name-goes-here").innerText = username;
-
-                user.currentPosition = {latitude: 49.252906, longitude: -122.999887};
             });
             $('#footerPlaceholder').load('/html/loggedInFooter.html');
         } else {
