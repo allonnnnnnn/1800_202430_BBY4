@@ -47,12 +47,14 @@ LoadGoogleMaps();
  * Loads the geo geolocater to find where the user is
  */
 function loadGeolocater() {
+    let watchID = undefined;
+
     const userImg = document.createElement("img");
     userImg.src = "/images/userMarker.png";
     userImg.style.height = "45px";
     firebase.auth().onAuthStateChanged((user) => {
         if (navigator.geolocation) {
-            navigator.geolocation.watchPosition((position) => {
+            watchID = navigator.geolocation.watchPosition((position) => {
                 let userLatitude = position.coords.latitude;
                 let userLongitude = position.coords.longitude;
 
@@ -63,6 +65,7 @@ function loadGeolocater() {
                 user.currentPosition = {latitude: userLatitude, longitude: userLongitude};
                 if (userLatitude > bounds.north || userLatitude < bounds.south || userLongitude < bounds.west || userLongitude > bounds.east) {
                     warnUserIsOffCampus()
+                    navigator.geolocation.clearWatch(watchID);
                     return;
                 }
                 
