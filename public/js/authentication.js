@@ -42,12 +42,7 @@ var uiConfig = {
     signInFlow: 'popup',
     signInSuccessUrl: "home",
     signInOptions: [
-        // firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        // firebase.auth.GithubAuthProvider.PROVIDER_ID,
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
-        // firebase.auth.PhoneAuthProvider.PROVIDER_ID
     ],
     // Terms of service url.
     tosUrl: '<your-tos-url>',
@@ -63,6 +58,7 @@ function logout() {
         console.log("logging out user");
     }).catch((error) => {
         // An error happened.
+        console.log(error);
     });
 }
 
@@ -75,6 +71,8 @@ function checkForUser() {
 
                 let username = user.displayName;
                 document.getElementById("name-goes-here").innerText = username;
+
+                user.currentPosition = {latitude: 49.252906, longitude: -122.999887};
             });
             $('#footerPlaceholder').load('/html/loggedInFooter.html');
         } else {
@@ -86,8 +84,6 @@ function checkForUser() {
     })
 }
 checkForUser();
-
-
 
 function w3_open() {
     // Show the sidebar by adding a class

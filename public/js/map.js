@@ -1,7 +1,12 @@
 import apiKey from "./GoogleAPI_BBY4.js";
 window.map;
 
-var bounds = {
+const currentRoutePoints = {
+    currentOrigin: null,
+    currentDestination: null,
+};
+
+const bounds = {
     north: 49.254794,
     east: -122.993394,
     south: 49.241543,
@@ -72,7 +77,7 @@ function loadGeolocater() {
 window.onMarkerClicked = function (snap, key) {
     let snapData = snap.data();
 
-    window.map.zoom = 20;
+    window.map.setZoom(20);
     window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
     $("#infoCard-goes-here").load("/html/infoCard.html", function () {
         let infoCard = document.getElementById("infoCard");
@@ -96,6 +101,9 @@ window.onMarkerClicked = function (snap, key) {
 
         //All this code below adds functionality to the buttons on the infocard
         document.getElementById("directionButton").addEventListener("click", () => {
+            currentRoutePoints.currentOrigin = firebase.auth().currentUser.currentPosition;
+            currentRoutePoints.currentDestination = {latitude: foundMarker.position.lat, longitude: foundMarker.position.lng};
+
             popUpDirectionsWindow(foundMarker);
         });
         document.getElementById("favouriteButton").addEventListener("click", function () {
@@ -105,7 +113,7 @@ window.onMarkerClicked = function (snap, key) {
             if (!foundMarker.favourited) {
                 document.getElementById("favouriteButtonText").innerText = "Unfavourite Place";
                 updatingDocument.update({
-                    [key]: { lat: snapData[key].latitude, lng: snapData[key].longitude }
+                    [key]: {lat: snapData[key].latitude, lng: snapData[key].longitude}
                 }).then(() => {
                     displayFavouriteOnMap(snapData[key].latitude, snapData[key].longitude);
                 });
@@ -129,16 +137,25 @@ window.onMarkerClicked = function (snap, key) {
     });
 }
 
-function popUpDirectionsWindow(origin, destination) {
+function popUpDirectionsWindow(assumedDestinationMarker) {
     goBack();
     document.getElementById("searchBar").style = "display: none";
-
     document.getElementById("searchBarDirections").style = "display: block";
+
+    document.getElementById("destinationInput").value = assumedDestinationMarker.title;
+
+    document.getElementById("calculateRoute").addEventListener("click", function() {
+        calculateRoute();
+    });
 
     document.getElementById("exitDirections").addEventListener("click", function() {
         document.getElementById("searchBar").style = "display: block";
         document.getElementById("searchBarDirections").style = "display: none";
     });
+}
+
+function calculateRoute() {
+    
 }
 
 function goBack() {
@@ -154,7 +171,7 @@ window.onSearchBarFocus = function (inputElement) {
     inputElement.addEventListener("input", function (event) {
         if (inputElement.id == "searchBarInput") {
             displaySearchResult(inputElement, document.getElementById("search-results-go-here"), (marker) => {
-                window.map.zoom = 20;
+                window.map.setZoom(20);
                 window.map.panTo({lat: marker.position.lat, lng: marker.position.lng + 0.00015});
                 
                 db.collection("Features").doc("Buildings").get()
@@ -163,9 +180,13 @@ window.onSearchBarFocus = function (inputElement) {
                     });
             });
         } else if (inputElement.id == "originInput") {
-            displaySearchResult(inputElement, document.getElementById("input-results-go-here"), () => {}); 
+            displaySearchResult(inputElement, document.getElementById("origin-results-go-here"), (marker) => {
+                currentRoutePoints.currentOrigin = {latitude: marker.position.lat, longitude: marker.position.lng};
+            }); 
         } else if (inputElement.id == "destinationInput") {
-            displaySearchResult(inputElement, document.getElementById("output-results-go-here"), () => {});
+            displaySearchResult(inputElement, document.getElementById("destination-results-go-here"), (marker) => {
+                currentRoutePoints.currentDestination = {latitude: marker.position.lat, longitude: marker.position.lng};
+            });
         }
     });
 }
@@ -195,7 +216,7 @@ function displaySearchResult(inputElement, outputElement, callback) {
     });
 
     filteredMarkers.forEach(marker => {
-        if (marker.title == "") return;
+        if (marker.title == "" || marker.featureType == "Washrooms" || marker.featureType == "Microwaves" || marker.featureType == "WaterFountains") return;
 
         let templateClone = document.getElementById("listTemplate").content.cloneNode(true);
         templateClone.querySelector("p").innerHTML = marker.title;
@@ -211,4 +232,48 @@ function displaySearchResult(inputElement, outputElement, callback) {
     });
 }
 
+window.onDropDownButtonsClicked = function(feature) {
+    db.collection("Features").doc(feature).get().then((doc) => {
+        let currentUserPosition = firebase.auth().currentUser.currentPosition;
+        let closestMarker;
+        let closestDistance = 100000000000;
+
+        for (const key in doc.data()) {
+            const latDelta = doc.data()[key].latitude - currentUserPosition.latitude;
+            const lngDelta = doc.data()[key].longitude - currentUserPosition.longitude;
+            const distance = calculateDistance(latDelta, lngDelta, currentUserPosition);
+            
+            if (closestMarker == null) { 
+                closestMarker = returnMarker(doc.data()[key].latitude, doc.data()[key].longitude);
+                closestDistance = distance;
+                continue;
+            }
+            
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestMarker = returnMarker(doc.data()[key].latitude, doc.data()[key].longitude);
+            }
+        }
+        window.onMarkerClicked(doc, closestMarker.title);
+    })
+};
+
+function calculateDistance(latDelta, lngDelta, currentUserPosition) {
+    const R = 6371; // Radius of the Earth in kilometers
+    const lat1 = currentUserPosition.latitude * Math.PI / 180; // Convert latitude to radians
+    const lat2 = (currentUserPosition.latitude + latDelta) * Math.PI / 180; // Convert latitude to radians
+    const lon1 = currentUserPosition.longitude * Math.PI / 180; // Convert longitude to radians
+    const lon2 = (currentUserPosition.longitude + lngDelta) * Math.PI / 180; // Convert longitude to radians
+
+    const dlat = lat2 - lat1; // Difference in latitudes
+    const dlng = lon2 - lon1; // Difference in longitudes
+
+    const a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+              Math.cos(lat1) * Math.cos(lat2) *
+              Math.sin(dlng / 2) * Math.sin(dlng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const distance = R * c; // Distance in kilometers
+    return distance;
+}
 
