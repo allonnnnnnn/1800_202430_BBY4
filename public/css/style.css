@@ -21,7 +21,8 @@ img {
     justify-content: space-between;
 }
 
-#infoCardButtons button, #backButton button {
+#infoCardButtons button,
+#backButton button {
     max-width: 43px;
     max-height: 43px;
     margin: auto 5px;
@@ -97,6 +98,12 @@ ul div {
     overflow: auto;
 }
 
-.onHover:hover, .onHover:active {
+.onHover:hover,
+.onHover:active {
     background-color: rgb(210, 205, 186);
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
 }
