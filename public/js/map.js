@@ -188,7 +188,7 @@ window.initMap = function () {
         });
     }
 
-    Click on the map to get the position of the click
+    /*Click on the map to get the position of the click
     map.addListener("click", (event) => {
         const lat = event.latLng.lat(); // Latitude of click
         const lng = event.latLng.lng(); // Longitude of click
@@ -228,11 +228,11 @@ function calculateGraphEdges() {
  * This will take the API key and load in the Map inside of main.html
  */
 function LoadGoogleMaps() {
-    let script = document.createElement("script");
-    script.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=" + apiKey + "&loading=async&callback=initMap");
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
+    let googleMapAPI = document.createElement("script");
+    googleMapAPI.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=" + apiKey + "&libraries=geometry&loading=async&callback=initMap");
+    googleMapAPI.async = true;
+    googleMapAPI.defer = true;
+    document.head.appendChild(googleMapAPI);
 }
 LoadGoogleMaps();
 
@@ -249,11 +249,11 @@ function loadGeolocater() {
     firebase.auth().onAuthStateChanged((user) => {
         if (navigator.geolocation) {
             watchID = navigator.geolocation.watchPosition((userPosition) => {
-                /*let userLatitude = userPosition.coords.latitude;
-                let userLongitude = userPosition.coords.longitude;*/
+                let userLatitude = userPosition.coords.latitude;
+                let userLongitude = userPosition.coords.longitude;
 
-                let userLatitude = 49.251500;
-                let userLongitude = -123.001273;
+                /*let userLatitude = 49.251500;
+                let userLongitude = -123.001273;*/
                 user.currentPosition = { latitude: userLatitude, longitude: userLongitude };
                 //If statement checks if user is within BCIT
                 if (userLatitude > bounds.north || userLatitude < bounds.south || userLongitude < bounds.west || userLongitude > bounds.east) {
@@ -270,8 +270,8 @@ function loadGeolocater() {
                         title: "User"
                     });
                     if (!loadedIn) {
-                        window.map.setZoom(18);
                         window.map.panTo({ lat: userLatitude, lng: userLongitude });
+                        window.map.setZoom(18);
                         loadedIn = true;
                     }
                 });
@@ -300,8 +300,8 @@ function warnUserIsOffCampus() {
 window.onMarkerClicked = function (snap, key) {
     let snapData = snap.data();
 
-    window.map.setZoom(20);
     window.map.panTo({ lat: snapData[key].latitude, lng: snapData[key].longitude + 0.00015 });
+    window.map.setZoom(20);
     $("#infoCard-goes-here").load("/html/infoCard.html", function () {
         let infoCard = document.getElementById("infoCard");
         let foundMarker = returnMarker(snapData[key].latitude, snapData[key].longitude);
@@ -311,6 +311,8 @@ window.onMarkerClicked = function (snap, key) {
             return;
         }
 
+        //Check if this user already favourited this place. If so, change the gui to "Favourited" which when
+        //pressing it will unfavourite it (remove it from the database)
         if (foundMarker.favourited) {
             document.getElementById("favouriteButtonText").innerText = "Unfavourite Place";
         } else {
@@ -319,15 +321,12 @@ window.onMarkerClicked = function (snap, key) {
 
         infoCard.getElementsByClassName("card-title")[0].innerHTML = key;
 
-        //Check if this user already favourited this place. If so, change the gui to "Favourited" which when
-        //pressing it will unfavourite it (remove it from the database)
-
         //All this code below adds functionality to the buttons on the infocard
         document.getElementById("directionButton").addEventListener("click", () => {
             let userPosition = firebase.auth().currentUser.currentPosition;
             currentRoutePoints.currentOrigin = { lat: userPosition.latitude, lng: userPosition.longitude };
             currentRoutePoints.currentDestination = { lat: foundMarker.position.lat, lng: foundMarker.position.lng };
-            
+
             popUpDirectionsWindow(foundMarker);
         });
         document.getElementById("favouriteButton").addEventListener("click", function () {
@@ -361,6 +360,18 @@ window.onMarkerClicked = function (snap, key) {
     });
 }
 
+function disableMarkerClick() {
+    window.markers.forEach((marker) => {
+        marker.Clickable = false;
+    });
+}
+
+function enableMarkerClick() {
+    window.markers.forEach((marker) => {
+        marker.Clickable = true;
+    });
+}
+
 function popUpDirectionsWindow(assumedDestinationMarker) {
     goBack();
     document.getElementById("searchBar").style = "display: none";
@@ -369,7 +380,25 @@ function popUpDirectionsWindow(assumedDestinationMarker) {
     document.getElementById("destinationInput").value = assumedDestinationMarker.title;
 
     document.getElementById("calculateRoute").addEventListener("click", function () {
-        displayRoute();
+        document.getElementById("footerPlaceholder").style.display = "none";
+        document.getElementById("navigationWindow").style.display = "block";
+        document.getElementById("searchBarDirections").style.display = "none";
+        disableMarkerClick();
+
+        let polyline = displayRoute();
+        
+        let distance = Math.ceil(google.maps.geometry.spherical.computeLength(polyline.getPath()));
+        document.getElementById("navigationWindow").querySelector("#distance").innerText = distance + "m";
+
+        navigationWindow.querySelector("button").addEventListener("click", function () {
+            polyline.setMap(null);
+            enableMarkerClick();
+
+            document.getElementById("searchBar").style.display = "block";
+            document.getElementById("footerPlaceholder").style.display = "block";
+            document.getElementById("navigationWindow").style.display = "";
+            document.getElementById("navigationWindow").style.setProperty("display", "none", "important");
+        });
     });
 
     document.getElementById("exitDirections").addEventListener("click", function () {
@@ -382,17 +411,39 @@ function displayRoute() {
     let route = calculateRoute();
 
     if (route == null) {
+        console.log("Could not display route");
         return;
     }
-    console.log(route);
+
+    const lineSymbol = {
+        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+    };
+
+    let reversedRoute = [];
+
+    for (let i = route.length - 1; i >= 0; i--) {
+        reversedRoute.push(route[i]);
+    }
+
     const polyline = new google.maps.Polyline({
-        path: route,
+        path: reversedRoute,
         geodensic: true,
         strokeColor: "#00008B",
         strokeOpacity: 1.0,
         strokeWeight: 5,
+        icons: [{ icon: lineSymbol }]
     });
     polyline.setMap(map);
+
+    let origin = currentRoutePoints.currentOrigin;
+    let destination = currentRoutePoints.currentDestination;
+
+    let latDelta = (origin.lat - destination.lat) / -2;
+    let lngDelta = (origin.lng - destination.lng) / -2;
+    map.panTo({ lat: origin.lat + latDelta, lng: origin.lng + lngDelta });
+    map.setZoom(18);
+
+    return polyline;
 }
 
 /**
@@ -403,11 +454,11 @@ function calculateRoute() {
     //In a {lat: , lng: } map
     let origin = currentRoutePoints.currentOrigin;
     let destination = currentRoutePoints.currentDestination;
-    
+
     if (origin == null || destination == null) {
         return null;
     }
-    
+
     let shortestRoute = dijkstra(origin, destination);
     shortestRoute.push(origin);
 
@@ -439,10 +490,11 @@ function dijkstra(startPoint, endPoint) {
     estimates[currentKey] = 0;
     visited[currentKey] = true;
 
-    while (currentKey !== closestEndPoint.key) {
+    //Keep looping until we find the the closest node to our destination
+    while (currentKey != closestEndPoint.key) {
         visited[currentKey] = true;
 
-        // Update estimates for neighbors of the current node
+        // Create/update the "estimates" (distances) for all neightboring nodes
         for (const neighbor in routeGraph[currentKey]) {
             if (visited[neighbor]) continue;
 
@@ -463,7 +515,7 @@ function dijkstra(startPoint, endPoint) {
             }
         }
 
-        // If no valid next node is found, break (graph might be disconnected)
+        // If no valid next node is found, break
         if (nextKey === null) break;
 
         currentKey = nextKey;
@@ -495,9 +547,6 @@ window.onSearchBarFocus = function (inputElement) {
                     .then(function (buildingDoc) {
                         window.onMarkerClicked(buildingDoc, marker.title);
                     });
-
-                window.map.setZoom(20);
-                window.map.panTo({ lat: marker.position.lat, lng: marker.position.lng + 0.00015 });
             });
         } else if (inputElement.id == "originInput") {
             displaySearchResult(inputElement, document.getElementById("origin-results-go-here"), (marker) => {
@@ -599,8 +648,8 @@ function getClosestItem(pivot, items) {
 
 /**
  * Converts latitude and longitude to metric and calculates the distance from two points
- * @param {*} firstPoint is a map with lat and lng
- * @param {*} secondPoint is a map with lat and lng
+ * @param {*} firstPoint is a map data type with lat and lng
+ * @param {*} secondPoint is a map data type with lat and lng
  * @returns 
  */
 function calculateLatLngDistance(firstPoint, secondPoint) {

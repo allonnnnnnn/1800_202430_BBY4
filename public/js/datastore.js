@@ -6,15 +6,15 @@ labelElement.style = "font-size: 18pt";
 
 const waterFountainImg = document.createElement("img");
 waterFountainImg.src = "/images/WaterFountainIcon.png";
-waterFountainImg.style.height = "40px";
+waterFountainImg.style.height = "60px";
 
 const microwaveImg = document.createElement("img");
-waterFountainImg.src = "/images/MicrowaveIcon.png";
-waterFountainImg.style.height = "40px";
+microwaveImg.src = "/images/MicrowaveIcon.png";
+microwaveImg.style.height = "60px";
 
 const washroomImg = document.createElement("img");
-waterFountainImg.src = "/images/WashroomIcon.png";
-waterFountainImg.style.height = "40px";
+washroomImg.src = "/images/WashroomIcon.png";
+washroomImg.style.height = "60px"; 
 
 const markerOptions = {
     "Buildings": {
@@ -48,6 +48,7 @@ function readAll() {
                         gmpClickable: true,
                         title: key
                     });
+                    newMarker.Clickable = true;
                     newMarker.featureType = featureDoc.id;
                     newMarker.favourited = false;
                     markers.push(newMarker);
@@ -58,8 +59,9 @@ function readAll() {
                         let currentZoom = window.map.getZoom();
                         newMarker.map = currentZoom >= markerCustomizations.zoom ? map : null;
                     });
-
+                    console.log(newMarker.Clickable);
                     newMarker.addListener("click", function () {
+                        if (!newMarker.Clickable) return;
                         window.onMarkerClicked(featureDoc, key);
                     });
                 });

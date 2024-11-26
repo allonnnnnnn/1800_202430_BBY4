@@ -39,27 +39,6 @@ app.get("/home/request", function (req, res) {
     let doc = fs.readFileSync("./app/html/request.html", "utf-8");
     res.send(doc);
 });
-app.post("/getRoute", function (req, res) {
-    const { origins, destinations, waypoints } = req.body;
-
-    const requestBody = {
-        origins,
-        destinations,
-        waypoints,
-        travelMode: "WALKING",
-        key: apiKey,
-    };
-
-    fetch('https://routes.googleapis.com/directions/v2:computeRoutes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody),
-    })
-        .then((response) => {
-            const data = response.json();
-            res.json(data);
-        });
-});
 
 let port = 8000;
 app.listen(port, function () {
