@@ -59,7 +59,7 @@ function readAll() {
                         let currentZoom = window.map.getZoom();
                         newMarker.map = currentZoom >= markerCustomizations.zoom ? map : null;
                     });
-                    console.log(newMarker.Clickable);
+                    
                     newMarker.addListener("click", function () {
                         if (!newMarker.Clickable) return;
                         window.onMarkerClicked(featureDoc, key);

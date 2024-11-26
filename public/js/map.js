@@ -197,8 +197,33 @@ window.initMap = function () {
     */
 
     fillInUndirectedGraph();
-
     loadGeolocater();
+}
+
+/**
+ * Check if the user wants to go to a place from another window (For example,
+ * coming from the Favourites page after pressing a button)
+ * @returns 
+ */
+function checkForGoToPlace() {
+    //User did not come back with a place they want to go to :(
+    if (localStorage.getItem("GoToPlace") == null) {
+        return;
+    }
+
+    let place = localStorage.getItem("GoToPlace");
+    let userPosition = firebase.auth().currentUser.currentPosition;
+    
+    currentRoutePoints.currentOrigin = { lat: userPosition.latitude, lng: userPosition.longitude };
+    db.collection("Features").doc("Buildings").get().then((data) => {
+        data = data.data();
+        let destinationPosition = { lat: data[place].latitude, lng: data[place].longitude };
+
+        currentRoutePoints.currentDestination = destinationPosition;
+        displayRouteWindow();
+    });
+
+    localStorage.removeItem("GoToPlace");
 }
 
 function fillInUndirectedGraph() {
@@ -249,11 +274,11 @@ function loadGeolocater() {
     firebase.auth().onAuthStateChanged((user) => {
         if (navigator.geolocation) {
             watchID = navigator.geolocation.watchPosition((userPosition) => {
-                let userLatitude = userPosition.coords.latitude;
-                let userLongitude = userPosition.coords.longitude;
+                // let userLatitude = userPosition.coords.latitude;
+                // let userLongitude = userPosition.coords.longitude;
 
-                /*let userLatitude = 49.251500;
-                let userLongitude = -123.001273;*/
+                let userLatitude = 49.251500;
+                let userLongitude = -123.001273;
                 user.currentPosition = { latitude: userLatitude, longitude: userLongitude };
                 //If statement checks if user is within BCIT
                 if (userLatitude > bounds.north || userLatitude < bounds.south || userLongitude < bounds.west || userLongitude > bounds.east) {
@@ -269,13 +294,22 @@ function loadGeolocater() {
                         content: userImg,
                         title: "User"
                     });
+                    //Check if the user has loaded in (will happen once on user initalized)
                     if (!loadedIn) {
+                        //This will check if the user came from the Favourites page and pressed the "Go To" button 
+                        checkForGoToPlace();
+
                         window.map.panTo({ lat: userLatitude, lng: userLongitude });
                         window.map.setZoom(18);
                         loadedIn = true;
                     }
                 });
-            });
+            },
+                (error) => {
+                    console.log("Yeah lil bro not working");
+                },
+                { enableHighAccuracy: true }
+            );
         } else {
             user.currentPosition = { latitude: 0, longitude: 0 };
             warnUserIsOffCampus();
@@ -380,30 +414,35 @@ function popUpDirectionsWindow(assumedDestinationMarker) {
     document.getElementById("destinationInput").value = assumedDestinationMarker.title;
 
     document.getElementById("calculateRoute").addEventListener("click", function () {
-        document.getElementById("footerPlaceholder").style.display = "none";
-        document.getElementById("navigationWindow").style.display = "block";
-        document.getElementById("searchBarDirections").style.display = "none";
-        disableMarkerClick();
-
-        let polyline = displayRoute();
-        
-        let distance = Math.ceil(google.maps.geometry.spherical.computeLength(polyline.getPath()));
-        document.getElementById("navigationWindow").querySelector("#distance").innerText = distance + "m";
-
-        navigationWindow.querySelector("button").addEventListener("click", function () {
-            polyline.setMap(null);
-            enableMarkerClick();
-
-            document.getElementById("searchBar").style.display = "block";
-            document.getElementById("footerPlaceholder").style.display = "block";
-            document.getElementById("navigationWindow").style.display = "";
-            document.getElementById("navigationWindow").style.setProperty("display", "none", "important");
-        });
+        displayRouteWindow();
     });
 
     document.getElementById("exitDirections").addEventListener("click", function () {
         document.getElementById("searchBar").style = "display: block";
         document.getElementById("searchBarDirections").style = "display: none";
+    });
+}
+
+function displayRouteWindow() {
+    document.getElementById("footerPlaceholder").style.display = "none";
+    document.getElementById("navigationWindow").style.display = "block";
+    document.getElementById("searchBarDirections").style.display = "none";
+    document.getElementById("searchBar").style.display = "none";
+    disableMarkerClick();
+
+    let polyline = displayRoute();
+
+    let distance = Math.ceil(google.maps.geometry.spherical.computeLength(polyline.getPath()));
+    document.getElementById("navigationWindow").querySelector("#distance").innerText = distance + "m";
+
+    navigationWindow.querySelector("button").addEventListener("click", function () {
+        polyline.setMap(null);
+        enableMarkerClick();
+
+        document.getElementById("searchBar").style.display = "block";
+        document.getElementById("footerPlaceholder").style.display = "block";
+        document.getElementById("navigationWindow").style.display = "";
+        document.getElementById("navigationWindow").style.setProperty("display", "none", "important");
     });
 }
 

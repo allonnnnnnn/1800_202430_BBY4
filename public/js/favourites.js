@@ -12,12 +12,19 @@ function displayFavourites() {
                     
                     document.getElementById("Buildings-go-here").appendChild(newcard);
                     const appendedCard = document.getElementById("Buildings-go-here").lastElementChild;
-                    let removeButton = appendedCard.querySelector('.btn');
+                    let removeButton = appendedCard.querySelector("#removeButton");
                     removeButton.addEventListener("click", () => {
                         db.collection("User").doc(user.uid).collection("Favourites").doc("Buildings").update({
                             [key]: firebase.firestore.FieldValue.delete()
                         });
+
                         appendedCard.remove();
+                    });
+
+                    let goToButton = appendedCard.querySelector("#GoToButton");
+                    goToButton.addEventListener("click", () => {
+                        localStorage.setItem("GoToPlace", key);
+                        window.location.href = "/home";
                     });
                 }
             })
