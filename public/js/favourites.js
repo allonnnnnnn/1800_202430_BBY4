@@ -6,7 +6,6 @@ function displayFavourites() {
             db.collection("User").doc(user.uid).collection("Favourites").doc("Buildings").get()
             .then((doc) => {
                 for (const key in doc.data()) {
-
                     const newcard = listTemplate.content.cloneNode(true);
                     newcard.querySelector('.building').innerHTML = key;
                     

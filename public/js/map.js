@@ -262,7 +262,7 @@ function LoadGoogleMaps() {
 LoadGoogleMaps();
 
 /**
- * Loads the geo geolocater to find where the user is
+ * Loads the geolocater to find where the user is
  */
 function loadGeolocater() {
     let watchID = undefined;
@@ -357,6 +357,9 @@ window.onMarkerClicked = function (snap, key) {
 
         //All this code below adds functionality to the buttons on the infocard
         document.getElementById("directionButton").addEventListener("click", () => {
+            document.getElementById("originInput").value = "Current Location";
+            document.getElementById("destinationInput").value = "";
+
             let userPosition = firebase.auth().currentUser.currentPosition;
             currentRoutePoints.currentOrigin = { lat: userPosition.latitude, lng: userPosition.longitude };
             currentRoutePoints.currentDestination = { lat: foundMarker.position.lat, lng: foundMarker.position.lng };
@@ -588,8 +591,24 @@ window.onSearchBarFocus = function (inputElement) {
                     });
             });
         } else if (inputElement.id == "originInput") {
+            let searchList = document.getElementById("origin-results-go-here");
             displaySearchResult(inputElement, document.getElementById("origin-results-go-here"), (marker) => {
                 currentRoutePoints.currentOrigin = marker.position;
+            });
+
+            //Will insert the "Current Location" at the very top of the list
+            if (document.getElementById(inputElement.id).value == "") return;
+
+            let templateClone = document.getElementById("listTemplate").content.cloneNode(true);
+            templateClone.querySelector("p").innerHTML = "Current Location";
+            searchList.insertBefore(templateClone, searchList.children[0]);
+
+            let currentLocationClone = searchList.children[0];
+            currentLocationClone.addEventListener("click", function() {
+                let userPosition = firebase.auth().currentUser.currentPosition;
+                currentRoutePoints.currentOrigin = {lat: userPosition.latitude, lng: userPosition.longitude};
+                searchList.innerText = "";
+                inputElement.value = "Current Location";
             });
         } else if (inputElement.id == "destinationInput") {
             displaySearchResult(inputElement, document.getElementById("destination-results-go-here"), (marker) => {
@@ -608,6 +627,7 @@ window.onSearchBarOutOfFocus = function (inputElement) {
 function displaySearchResult(inputElement, outputElement, callback) {
     let searchList = outputElement;
     if (searchList == null) return;
+
     searchList.innerHTML = "";
 
     let input = inputElement.value.toLowerCase().trim();

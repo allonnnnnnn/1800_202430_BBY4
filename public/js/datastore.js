@@ -4,6 +4,18 @@ let labelElement = document.createElement("div");
 labelElement.innerText = "Building Name";
 labelElement.style = "font-size: 18pt";
 
+const favouriteHolder = document.createElement("div");
+favouriteHolder.style = "display: flex; margin-right: 55px;";
+const favouritedPlaceName = document.createElement("p");
+favouritedPlaceName.style = "margin: auto; font-size: 18pt";
+const favouriteImg = document.createElement("img");
+favouriteImg.src = "/Images/FavouriteIcon.png";
+favouriteImg.style.height = "40px";
+
+
+favouriteHolder.appendChild(favouritedPlaceName);
+favouriteHolder.appendChild(favouriteImg);
+
 const waterFountainImg = document.createElement("img");
 waterFountainImg.src = "/images/WaterFountainIcon.png";
 waterFountainImg.style.height = "60px";
@@ -32,11 +44,14 @@ const markerOptions = {
     "Washrooms": {
         content: washroomImg,
         zoom: 19
+    },
+    "Favourited": {
+        content: favouriteHolder,
     }
 }
 
 function readAll() {
-    let buildingRef = db.collection("Features").get().then((collection) => {
+    db.collection("Features").get().then((collection) => {
         collection.forEach(featureDoc => {
             for (const key in featureDoc.data()) {
                 google.maps.importLibrary("marker").then(({ AdvancedMarkerElement }) => {
@@ -95,11 +110,13 @@ function displayFavouriteOnMap(locationLat, locationLng) {
     }
 
     if (!foundMarker.favourited) {
+        foundMarker.content = markerOptions["Favourited"].content.cloneNode(true);
         foundMarker.favourited = true;
-        foundMarker.content.style.color = "rgb(218,165,32)";
+        foundMarker.content.querySelector("p").innerHTML += foundMarker.title;
     } else {
+        foundMarker.content = markerOptions["Buildings"].content.cloneNode(true);
+        foundMarker.content.innerText = foundMarker.title;
         foundMarker.favourited = false;
-        foundMarker.content.style.color = "rgb(0,0,0)";
     }
 }
 
