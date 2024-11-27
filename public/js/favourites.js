@@ -39,3 +39,11 @@ function removeFavourite(event) {
     console.log(element.innerHTML);
 }
 
+const savedZoomLevel = localStorage.getItem('zoomLevel');
+  
+if (savedZoomLevel) {
+  
+  document.body.style.fontSize = savedZoomLevel;  
+} else {
+  document.body.style.fontSize = '16px';
+}

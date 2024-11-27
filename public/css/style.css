@@ -107,3 +107,20 @@ ul div {
     background-color: black;
     color: white;
 }
+body {
+    font-family: Arial, sans-serif;
+}
+
+    
+.zoom-settings {
+    margin: 0px;
+}
+
+ #zoom-slider {
+     width: 200px;
+ }
+
+#zoom-value {
+    font-weight: bold;
+    margin-left: 10px;
+}
