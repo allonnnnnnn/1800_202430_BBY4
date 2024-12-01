@@ -111,6 +111,18 @@ body {
     font-family: Arial, sans-serif;
 }
 
+#cardImage {
+    border-radius: 5%;
+    height: 100px;
+    margin: 0 auto;
+    width: auto;
+    min-width: 0px;
+    max-width: 1000px;
+}
+
+.card-text {
+    margin-top: 20px;
+}
     
 .zoom-settings {
     margin: 0px;

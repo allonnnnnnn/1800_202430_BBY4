@@ -1,4 +1,5 @@
 require('dotenv').config();
+const functions = require("firebase-functions");
 const express = require("express");
 const fetch = import("node-fetch");
 const app = express();

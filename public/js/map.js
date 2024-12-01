@@ -274,11 +274,11 @@ function loadGeolocater() {
     firebase.auth().onAuthStateChanged((user) => {
         if (navigator.geolocation) {
             watchID = navigator.geolocation.watchPosition((userPosition) => {
-                // let userLatitude = userPosition.coords.latitude;
-                // let userLongitude = userPosition.coords.longitude;
+                let userLatitude = userPosition.coords.latitude;
+                let userLongitude = userPosition.coords.longitude;
 
-                let userLatitude = 49.251500;
-                let userLongitude = -123.001273;
+                /*let userLatitude = 49.251500;
+                let userLongitude = -123.001273;*/
                 user.currentPosition = { latitude: userLatitude, longitude: userLongitude };
                 //If statement checks if user is within BCIT
                 if (userLatitude > bounds.north || userLatitude < bounds.south || userLongitude < bounds.west || userLongitude > bounds.east) {
@@ -354,6 +354,8 @@ window.onMarkerClicked = function (snap, key) {
         }
 
         infoCard.getElementsByClassName("card-title")[0].innerHTML = key;
+        infoCard.querySelector("img").src = "/images/" + key + ".png";
+        infoCard.querySelector(".card-text").innerText = snapData[key].description || infoCard.querySelector(".card-text").innerText 
 
         //All this code below adds functionality to the buttons on the infocard
         document.getElementById("directionButton").addEventListener("click", () => {
