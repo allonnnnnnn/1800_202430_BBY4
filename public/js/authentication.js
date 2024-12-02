@@ -83,14 +83,5 @@ function checkForUser() {
 }
 checkForUser();
 
-function w3_open() {
-    // Show the sidebar by adding a class
-    document.getElementById("mySidebar").classList.add("open");
-    document.body.classList.add("sidebar-open");
-}
 
-function w3_close() {
-    // Hide the sidebar by removing the class
-    document.getElementById("mySidebar").classList.remove("open");
-    document.body.classList.remove("sidebar-open");
-}
+

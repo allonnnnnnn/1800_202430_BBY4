@@ -22,7 +22,7 @@ function loadZoomLevel() {
     zoomSlider.value = parseInt(savedZoomLevel); 
     zoomValue.textContent = savedZoomLevel;
   } else {
-    // Default zoom level if none is set
+    // Default zoom level 
     document.body.style.fontSize = '16px';
     zoomSlider.value = 16;
     zoomValue.textContent = '16px';
