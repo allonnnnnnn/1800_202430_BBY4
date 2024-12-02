@@ -101,7 +101,10 @@ body {
     font-family: Arial, sans-serif;
     transition: background-color 0.3s, color 0.3s;
 }
-
+.white-img {
+    filter: invert(1) brightness(100%);
+  }
+  
 body.dark-mode {
     background-color: #121212;
     color: #ffffff;

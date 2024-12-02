@@ -1,25 +1,17 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getDatabase, ref, update } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
-
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-
 function darkMode() {
-  let isDarkMode = false;
-  const body = document.body;
-  const userId = firebase.auth().currentUser;;
+    let checkbox = document.getElementById("darkmode");
+    let body = document.getElementById('body')
+    var element = document.body;
+    element.classList.toggle("dark-mode");
 
-  isDarkMode = !isDarkMode;
-
-  body.classList.toggle("dark-mode", isDarkMode);
-
-  update(ref(database, `users/${userId}`), {
-    darkmode: isDarkMode
-  }).then(() => {
-    console.log("Dark mode preference updated:", isDarkMode);
-  });
+    // checkbox.addEventListener('change', function () {
+    //     if (this.checked) {
+    //         body.classList.add('dark')
+    //     } else {
+    //         body.classList.remove('dark')
+    //     }
+    // });
 }
-
 const zoomSlider = document.getElementById('zoom-slider');
 const zoomValue = document.getElementById('zoom-value');
 
@@ -27,7 +19,7 @@ function loadZoomLevel() {
   const savedZoomLevel = localStorage.getItem('zoomLevel');
   if (savedZoomLevel) {
     document.body.style.fontSize = savedZoomLevel;
-    zoomSlider.value = parseInt(savedZoomLevel);
+    zoomSlider.value = parseInt(savedZoomLevel); 
     zoomValue.textContent = savedZoomLevel;
   } else {
     // Default zoom level 
@@ -37,7 +29,7 @@ function loadZoomLevel() {
   }
 }
 
-zoomSlider.addEventListener('input', function () {
+zoomSlider.addEventListener('input', function() {
   const zoomLevel = zoomSlider.value + 'px';  // Get the zoom level in px
   document.body.style.fontSize = zoomLevel;  // Apply it to the body (zoom the page)
 
