@@ -32,12 +32,12 @@
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  
-   <style>
-    body{
+
+  <style>
+    body {
       background-color: blue;
     }
-   </style>
+  </style>
 </head>
 
 <body>
@@ -52,24 +52,25 @@
   <br><br><br>
 
   <ul class="list-group">
-    <li class="list-group-item"><button onclick="darkMode()">Toggle dark mode</button></li>
-    <li class="list-group-item" id="second-item" style="display: flex; justify-content: space-between; align-items: center;">
-       
-        <div class="zoom-settings" style="display: flex; align-items: center; gap: 10px;">
-            <label for="zoom-slider" style="margin: 0;">Zoom:</label> 
-            <input type="range" id="zoom-slider" min="12" max="36" value="16" step="1" style="flex-shrink: 0;"> 
-            <span id="zoom-value">16px</span> 
-        </div>
+    <li class="list-group-item"><button id="darkmode" onclick="darkMode()">Toggle Dark Mode</button></li>
+    <li class="list-group-item" id="second-item"
+      style="display: flex; justify-content: space-between; align-items: center;">
+
+      <div class="zoom-settings" style="display: flex; align-items: center; gap: 10px;">
+        <label for="zoom-slider" style="margin: 0;">Zoom:</label>
+        <input type="range" id="zoom-slider" min="12" max="36" value="16" step="1" style="flex-shrink: 0;">
+        <span id="zoom-value">16px</span>
+      </div>
     </li>
     <li class="list-group-item">A third item</li>
     <li class="list-group-item">A fourth item</li>
     <li class="list-group-item">And a fifth one</li>
-</ul>
-
-  
+  </ul>
 
 
-  <footer class="footer fixed-bottom" style="height: 7.5vh;" >
+
+
+  <footer class="footer fixed-bottom" style="height: 7.5vh;">
     <div class="container">
       <nav class="navbar navbar-expand-lg" style="background-color: darkblue;">
         <div class="container-fluid">

@@ -5,7 +5,7 @@ labelElement.innerText = "Building Name";
 labelElement.style = "font-size: 18pt";
 
 const favouriteHolder = document.createElement("div");
-favouriteHolder.style = "display: flex; margin-right: 55px;";
+favouriteHolder.style = "display: flex; margin-right: 55px; color: rgb(242,64,53)";
 const favouritedPlaceName = document.createElement("p");
 favouritedPlaceName.style = "margin: auto; font-size: 18pt";
 const favouriteImg = document.createElement("img");
@@ -55,10 +55,12 @@ function readAll() {
         collection.forEach(featureDoc => {
             for (const key in featureDoc.data()) {
                 google.maps.importLibrary("marker").then(({ AdvancedMarkerElement }) => {
+                    let markerData = featureDoc.data()[key];
+                    console.log(markerData.latitude || markerData.position.latitude);
                     let markerCustomizations = markerOptions[featureDoc.id];
                     let newMarker = new AdvancedMarkerElement({
                         map: window.map,
-                        position: { lat: featureDoc.data()[key].latitude, lng: featureDoc.data()[key].longitude },
+                        position: { lat: markerData.latitude, lng: markerData.longitude },
                         content: markerCustomizations.content.cloneNode(true),
                         gmpClickable: true,
                         title: key
@@ -115,7 +117,7 @@ function displayFavouriteOnMap(locationLat, locationLng) {
         foundMarker.content.querySelector("p").innerHTML += foundMarker.title;
     } else {
         foundMarker.content = markerOptions["Buildings"].content.cloneNode(true);
-        foundMarker.content.innerText = foundMarker.title;
+        foundMarker.content.innerText = foundMarker.title; 
         foundMarker.favourited = false;
     }
 }
