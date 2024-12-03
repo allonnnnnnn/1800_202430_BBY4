@@ -6,11 +6,19 @@ async function writeRequest() {
     } else {
         let input1 = document.getElementById("description").value;
         let input2 = document.getElementById("building").value;
-        db.collection("Requests").add({
-            user: user.displayName,
-            Request: input1,
-            building: input2
-        });
+        
+        try {
+            await db.collection("Requests").add({
+                user: user.displayName,
+                Request: input1,
+                building: input2
+            });
+            console.log('Request submitted successfully');
+
+            window.location.href = '/home/thanks'; 
+        } catch (error) {
+            console.error('Error submitting request: ', error);
+        }
     }
 
 }
@@ -34,3 +42,4 @@ readReview();
   }
 
 
+  

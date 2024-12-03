@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>NavBCIT</title>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <meta name="comp1800 template" content="My 1800 App">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Boostrap Library JS CDN  go here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+
+    <!-- Other libraries go here -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: blue;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+    <!-- Stuff for body gogit ses here -->
+
+    <div id="sidebarPlaceholder"></div>
+
+    <br><br><br>
+
+    <div class="container1">
+        <div class="card1">
+            <div class="icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1>Thank You!</h1>
+            <p class="thank-you-message">
+                Your request has been successfully submitted.
+            </p>
+            <button class="btn" onclick="window.location.href = '/home'">Go Back to Map</button>
+            <div>
+                <a href="/home/request" class="home-link">Make another request</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer fixed-bottom" style="height: 7.5vh;">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg" style="background-color: darkblue;">
+                <div class="container-fluid">
+                    <img src="/images/back.png" width="35" height="35" class="white-img" onclick="history.back()"
+                        alt="logo">
+                    <a href="/home/request"><img src="/images/Request.png" width="35" height="35" class="white-img"
+                            alt="logo"></a>
+                    <a href="/home/favourites"><img src="/images/bookmark.png" width="35" height="35" class="white-img"
+                            alt="logo"></a>
+                    <a href="/home/setting"><img src="/images/settings.png" width="35" height="35" class="white-img"
+                            alt="logo"></a>
+                </div>
+            </nav>
+        </div>
+    </footer>
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+    <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
+    <script src="/js/authentication.js"></script>
+    <script src="/js/favourites.js" type="module"></script>
+    <script src="/js/script.js"></script>
+
+</body>
+
+</html>
