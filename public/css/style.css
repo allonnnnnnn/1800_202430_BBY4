@@ -204,3 +204,55 @@ body.dark-mode {
 .card1 .home-link:hover {
     text-decoration: underline;
 }
+label {
+    color: rgb(9, 7, 7);
+}
+.container2 {
+max-width: 600px;  /* Ensures the form is not too wide */
+padding: 20px;
+background-color: #f9f9f9;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+height: 65vh;
+}
+
+h1 {
+font-size: 28px;
+font-weight: bold;
+color: #333;
+}
+
+.form-group label {
+font-weight: bold;
+color: #555;
+}
+
+.form-group input {
+border-radius: 4px;
+padding: 10px;
+font-size: 16px;
+margin-bottom: 15px;
+}
+
+button {
+font-size: 16px;
+padding: 10px 20px;
+border-radius: 4px;
+transition: all 0.3s ease;
+}
+
+button:hover {
+transform: scale(1.05);
+}
+
+button:focus {
+outline: none;
+}
+
+.d-flex {
+gap: 15px;
+}
+
+.d-flex span {
+width: 10px;
+}
