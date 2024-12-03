@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <style>
     body {
-      background-color: blue;
+      background-color: rgb(20, 47, 228);
     }
 
     label {
@@ -41,7 +41,7 @@
     }
 
     .input::placeholder {
-      color: white;
+      color: #555;
       opacity: 1;
     }
   </style>
@@ -56,13 +56,17 @@
 
   <div id="sidebarPlaceholder"></div>
 
-  <br><br>
+  <br>
   <div class="container" style="max-width: 600px; padding: 20px; margin: auto;">
     <br>
     <h1 style="color: white; font-weight: bold; text-align: center;">Change Request</h1>
-    <br>
+    <p class="para" style="text-align: center;"> See any incorrect information about a building? Let us know!
+       We at NavBCIT value your input.</p>
     <form>
       <div class="form-group" ;>
+        <h2 style="text-align: center; font-weight: bold;">Form</h2>
+        <p class="para para2" style="text-align: center; text-transform:capitalize;">Fill out the form before
+          you submit.</p>
         <label for="building" style="color: white; font-size: medium;">Building name</label>
         <br>
         <input type="text" style="background-color: #1a228f; color: #93bbe2; border-radius: 10px;
@@ -74,7 +78,6 @@
         <textarea class="form-control input" id="description" style="background-color: #1a228f; color: #93bbe2; border-radius: 10px;
     border: 1px solid rgb(53, 53, 53);" rows="5" placeholder="Description..."></textarea>
       </div>
-      <br><br>
       <div class="d-flex justify-content-center">
         <button type="button" class="btn btn-lg btn-primary" onclick="writeRequest()">Submit</button>
       </div>
@@ -104,6 +107,7 @@
   <script src="/js/authentication.js"></script>
   <script src="/js/request.js"></script>
   <script src="/js/script.js"></script>
+  
 
 </body>
 

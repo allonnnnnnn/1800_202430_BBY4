@@ -213,14 +213,14 @@ padding: 20px;
 background-color: #f9f9f9;
 border-radius: 8px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-height: 65vh;
+height: 70vh;
 
 }
 
 h1 {
 font-size: 28px;
 font-weight: bold;
-color: #333;
+color: white;
 }
 
 .form-group label {
