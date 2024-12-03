@@ -1,0 +1,139 @@
+<html lang="en">
+
+</html>
+
+<head>
+    <title>NavBCIT</title>
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <meta name="comp1800 template" content="My 1800 App">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- Boostrap Library JS CDN  go here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+
+    <!-- Other libraries go here -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+
+    <!-- Link to styles of your own -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://kit.fontawesome.com/aa7454d09f.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            background-color: rgb(20, 47, 228);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!------------------------------>
+    <!-- Your HTML Layout go here -->
+    <!------------------------------>
+    <!-- Stuff for body gogit ses here -->
+
+    <div id="sidebarPlaceholder"></div>
+
+    <br><br>
+    <section class="contact-form">
+        <h1 class="heading" style="color: white;">Contact Us</h1>
+        <p class="para">Do you need assistance or have questions about the campus navigation app? We would love to hear
+            from you!.</p>
+
+        <div class="contactForm">
+            <form action="#">
+                <h2 class="sub-heading" style="text-align: center;">Form</h2>
+                <p class="para para2" style="text-align: center; text-transform:capitalize;">Fill this out and our team
+                    will get in touch.</p>
+                <input type="text" class="input" placeholder="name...">
+                <input type="text" class="input" placeholder="email...">
+                <input type="text" class="input" placeholder="Subject...">
+                <textarea class="input" cols="30" rows="5" placeholder="Your message..."></textarea>
+                <input type="submit" class="input submit" onclick="writeContact()" value="Submit">
+            </form>
+
+            <div class="map-container">
+                <div class="mapBg"></div>
+                <div class="map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10417.784831440302!2d-123.01219143713627!3d49.2489879492668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867721fd53fee5%3A0x355ab207647a109d!2sBritish%20Columbia%20Institute%20of%20Technology!5e0!3m2!1sen!2sca!4v1733210961165!5m2!1sen!2sca"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="contactMethod">
+            <div class="method">
+                <i class="fa-solid fa-location-dot contactIcon"></i>
+                <article class="text">
+                    <h1 class="sub-heading">Location</h1>
+                    <p class="para">3700 Willingdon Ave, Burnaby, BC V5G 3H2</p>
+                </article>
+            </div>
+
+            <div class="method">
+                <i class="fa-solid fa-envelope contactIcon"></i>
+                <article class="text">
+                    <h1 class="sub-heading">Email</h1>
+                    <p class="para">Email: NavBCIT@my.bcit.ca</p>
+                </article>
+            </div>
+
+            <div class="method">
+                <i class="fa-solid fa-phone contactIcon"></i>
+                <article class="text">
+                    <h1 class="sub-heading">Phone</h1>
+                    <p class="para">Call Us: (604)-NAV-BCIT</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer fixed-bottom" style="height: 7.5vh;">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg" style="background-color: darkblue;">
+                <div class="container-fluid">
+                    <img src="/images/back.png" width="35" height="35" class="white-img" onclick="history.back()"
+                        alt="logo">
+                    <a href="/home/request"><img src="/images/Request.png" width="35" height="35" class="white-img"
+                            alt="logo"></a>
+                    <a href="/home/favourites"><img src="/images/bookmark.png" width="35" height="35" class="white-img"
+                            alt="logo"></a>
+                    <a href="/home/setting"><img src="/images/settings.png" width="35" height="35" class="white-img"
+                            alt="logo"></a>
+                </div>
+            </nav>
+        </div>
+    </footer>
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+
+    <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
+    <script src="/js/authentication.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/contact.js"></script>
+
+
+</body>
+
+</html>
