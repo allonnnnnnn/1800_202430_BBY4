@@ -62,7 +62,7 @@ img {
     height: 98.5%;
     width: 230px;
     position: fixed;
-    top: 50px;
+    top: 42px;
     left: -230px;
     background-color: rgb(0, 0, 198);
     transition: left 0.3s ease-in-out;
@@ -101,14 +101,16 @@ body {
     font-family: Arial, sans-serif;
     transition: background-color 0.3s, color 0.3s;
 }
+
 .white-img {
     filter: invert(1) brightness(100%);
-  }
-  
+}
+
 body.dark-mode {
     background-color: #121212;
     color: #ffffff;
 }
+
 #cardImage {
     border-radius: 5%;
     height: 100px;
@@ -121,14 +123,14 @@ body.dark-mode {
 .card-text {
     margin-top: 20px;
 }
-    
+
 .zoom-settings {
     margin: 0px;
 }
 
- #zoom-slider {
-     width: 200px;
- }
+#zoom-slider {
+    width: 200px;
+}
 
 #zoom-value {
     font-weight: bold;
@@ -157,7 +159,6 @@ body.dark-mode {
 .card1 h1 {
     font-size: 2rem;
     color: blue;
-    /* Green color for success */
     margin-bottom: 10px;
 }
 
@@ -204,67 +205,69 @@ body.dark-mode {
 .card1 .home-link:hover {
     text-decoration: underline;
 }
+
 label {
     color: rgb(9, 7, 7);
 }
+
 .container2 {
-max-width: 600px;  /* Ensures the form is not too wide */
-padding: 20px;
-background-color: #f9f9f9;
-border-radius: 8px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-height: 70vh;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 70vh;
 
 }
 
 h1 {
-font-size: 28px;
-font-weight: bold;
-color: white;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
 }
 
 .form-group label {
-font-weight: bold;
-color: #555;
+    font-weight: bold;
+    color: #555;
 }
 
 .form-group input {
-border-radius: 4px;
-padding: 10px;
-font-size: 16px;
-margin-bottom: 15px;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
 }
 
 button {
-font-size: 16px;
-padding: 10px 20px;
-border-radius: 4px;
-transition: all 0.3s ease;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 button:hover {
-transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 button:focus {
-outline: none;
+    outline: none;
 }
 
 .d-flex {
-gap: 15px;
+    gap: 15px;
 }
 
 .d-flex span {
-width: 10px;
+    width: 10px;
 }
 
-body{
+body {
     font-family: 'Roboto Serif', serif;
     color: white;
     padding-bottom: 5em;
 }
 
-section{
+section {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -274,7 +277,7 @@ section{
     margin-top: 2em;
 }
 
-.sectionHeader{
+.sectionHeader {
     text-transform: capitalize;
     font-weight: bold;
     font-size: 1.1rem;
@@ -282,42 +285,43 @@ section{
     margin-bottom: .5em;
 }
 
-.heading,.sub-heading{
+.heading,
+.sub-heading {
     margin-bottom: .5em;
     font-weight: bold;
     color: white;
 }
 
-.heading{
+.heading {
     font-size: 2.5em;
 }
 
-.sub-heading{
+.sub-heading {
     text-align: left;
 }
 
-.contactForm{
+.contactForm {
     display: grid;
     gap: 3em;
 }
 
-form{
+form {
     width: 100%;
     margin-top: 3em;
 }
 
-.para{
+.para {
     color: #93bbe2;
     font-size: 1.1rem;
     line-height: 1.5em;
     margin-bottom: 1em;
 }
 
-.para2{
+.para2 {
     text-align: left;
 }
 
-.input{
+.input {
     width: 95%;
     max-width: 700px;
     border: none;
@@ -332,15 +336,15 @@ form{
 
 }
 
-.input:focus{
+.input:focus {
     border: 1px solid #1c1e95f4;
 }
 
-.input::placeholder{
+.input::placeholder {
     text-transform: capitalize;
 }
 
-.submit{
+.submit {
     background-color: #1a228f;
     border: none;
     color: white;
@@ -349,13 +353,13 @@ form{
     width: 100%;
 }
 
-.map-container{
+.map-container {
     position: relative;
     width: 100%;
     height: 500px;
 }
 
-.mapBg{
+.mapBg {
     position: absolute;
     background-color: #1c1e95f4;
     top: 0;
@@ -365,7 +369,7 @@ form{
     border-radius: 20px;
 }
 
-.map{
+.map {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -373,39 +377,164 @@ form{
     height: 90%;
 }
 
-.map iframe{
+.map iframe {
     width: 100%;
     height: 100%;
 }
 
-.contactMethod{
+.contactMethod {
     display: flex;
     flex-direction: column;
     margin-top: 2em;
     text-align: left;
 }
 
-.method{
+.method {
     display: flex;
     align-items: center;
 }
 
-.contactIcon{
+.contactIcon {
     font-size: 2rem;
-    color: 93bbe2;
+    color: #93bbe2;
     width: 70px;
 }
 
 @media screen and (min-width:800px) {
-    section{
+    section {
         max-width: 1100px;
     }
-    .contactForm{
-        grid-template-columns: 1fr 1fr;
-    }   
 
-    .contactMethod{
+    .contactForm {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .contactMethod {
         flex-direction: row;
         justify-content: space-between;
+    }
+}
+
+.team-section {
+    width: 100%;
+}
+
+.team-section .container3 {
+    width: 80%;
+    margin: auto;
+}
+
+.team-section .container3 .row {
+    width: 60%;
+    margin: auto;
+}
+
+.team-section .container3 .row .title {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.team-section .container3 .row .title h1 {
+    font-size: 35px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: white;
+}
+
+.team-section .container3 .row .title p {
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1.5px;
+    color: #93bbe2;
+}
+
+.team-section .container3 .team-card {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
+    margin-top: 50px;
+}
+
+.team-section .container3 .team-card .card2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.team-section .container3 .team-card .card2:hover {
+    background-color: rgb(40, 102, 235);
+    transition: 0.3s;
+}
+
+.team-section .container3 .team-card .card2 .image-section {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid navy;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.team-section .container3 .team-card .card2 .image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.team-section .container3 .team-card .card2 .content {
+    width: 100%;
+    text-align: center;
+}
+
+.team-section .container3 .team-card .card2 .content h3 {
+    font-size: 27px;
+    margin-top: 10px;
+    letter-spacing: 1.5px;
+    color: #93bbe2;
+}
+
+.team-section .container3 .team-card .card2 .content h4 {
+    font-size: 17px;
+    margin-top: 10px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    color: white;
+}
+
+.team-section .container3 .team-card .card2 .content p {
+    font-size: 15px;
+    margin: 16px 0px;
+    line-height: 1.5;
+    color: #93bbe2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    padding: 0 10px;
+}
+
+@media screen and (max-width: 900px) {
+    .team-section .container3 .team-card {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .team-section .container3 .team-card {
+
+        grid-template-columns: 1fr;
+        min-height: 100vh;
+        overflow-y: auto;
     }
 }
