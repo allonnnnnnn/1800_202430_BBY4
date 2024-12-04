@@ -22,7 +22,10 @@ var uiConfig = {
                 microwaveDoc.set({});
 
                 userRef.set({
+                    name: user.displayName,
                     email: user.email,
+                    country: "Canada",                      //optional default profile info      
+                    school: "BCIT"
                 }).then(function () {
                     console.log("New user added to firestore");
                     window.location.assign("/home");

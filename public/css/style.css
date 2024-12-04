@@ -538,3 +538,19 @@ form {
         overflow-y: auto;
     }
 }
+
+.button2 {
+    background-color: #1a228f;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20%;
+}
+
+#nameInput::placeholder,
+#schoolInput::placeholder,
+#cityInput::placeholder {
+    color: #93bbe2;
+    /* Light blue color */
+}
