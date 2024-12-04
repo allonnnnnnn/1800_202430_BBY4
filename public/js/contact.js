@@ -7,7 +7,19 @@ function writeContact(event) {
   formData.subject = document.getElementById("subject").value;
   formData.message = document.getElementById("message").value;
   savetofirestore(formData);
-}
+
+  // Ask for confirmation
+  let confirmSubmit = window.confirm("Are you sure you want to submit this form?");
+  
+  // If user confirms, proceed with submitting to Firestore
+  if (confirmSubmit) {
+    savetofirestore(formData);
+  } else {
+    console.log('Form submission canceled.');
+  }
+
+
+
 async function savetofirestore(formData) {
   let user = firebase.auth().currentUser;
   console.log(user);
@@ -22,7 +34,7 @@ async function savetofirestore(formData) {
     console.log('Contact Form submitted successfully');
     window.location.href = '/home/success'; 
 } catch (error) {
-    console.error('Error submitting request: ', error);
+    console.error('Error submitting contact form: ', error);
 }
 
 }

@@ -1,7 +1,7 @@
 async function writeRequest() {
     let user = firebase.auth().currentUser;
 
-    if (!confirm('Are you sure?')) {
+    if (!confirm('Are you sure you want to submit this request?')) {
         e.preventDefault();
     } else {
         let input1 = document.getElementById("description").value;
