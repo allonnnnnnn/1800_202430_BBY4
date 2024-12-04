@@ -46,3 +46,4 @@ if (savedZoomLevel) {
 } else {
   document.body.style.fontSize = '16px';
 }
+}
