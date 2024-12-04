@@ -1,6 +1,5 @@
+<!DOCTYPE html>
 <html lang="en">
-
-</html>
 
 <head>
     <title>NavBCIT</title>
@@ -33,12 +32,12 @@
     <!-- Link to styles of your own -->
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://kit.fontawesome.com/aa7454d09f.js" crossorigin="anonymous"></script>
-
     <style>
         body {
+            font-family: Arial, sans-serif;
             background-color: rgb(20, 47, 228);
         }
+
     </style>
 </head>
 
@@ -51,62 +50,20 @@
 
     <div id="sidebarPlaceholder"></div>
 
-    <br><br>
-    <section class="contact-form">
-        <h1 class="heading" style="color: white;">Contact Us</h1>
-        <p class="para">Do you need assistance or have questions about the campus navigation app? We would love to hear
-            from you!.</p>
+    <br><br><br>
 
-        <div class="contactForm">
-            <form onsubmit="writeContact(event)" action="#">
-                <h2 class="sub-heading" style="text-align: center;">Form</h2>
-                <p class="para para2" style="text-align: center; text-transform:capitalize;">Fill this out and our team
-                    will get in touch.</p>
-                <input type="text" class="input" id="name" placeholder="name...">
-                <input type="text" class="input" id="email" placeholder="email...">
-                <input type="text" class="input" id="subject" placeholder="Subject...">
-                <textarea class="input" cols="30" rows="5" id="message" placeholder="Your message..."></textarea>
-                <input type="submit" class="input submit" value="Submit">
-            </form>
-
-            <div class="map-container">
-                <div class="mapBg"></div>
-                <div class="map">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10417.784831440302!2d-123.01219143713627!3d49.2489879492668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54867721fd53fee5%3A0x355ab207647a109d!2sBritish%20Columbia%20Institute%20of%20Technology!5e0!3m2!1sen!2sca!4v1733210961165!5m2!1sen!2sca"
-                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+    <div class="container1">
+        <div class="card1">
+            <div class="icon">
+                <i class="fas fa-check-circle"></i>
             </div>
+            <h1>Thank You!</h1>
+            <p class="thank-you-message">
+                Your contact form has been successfully submitted.
+            </p>
+            <button class="btn" onclick="window.location.href = '/home'">Go Back to Map</button>
         </div>
-
-        <div class="contactMethod">
-            <div class="method">
-                <i class="fa-solid fa-location-dot contactIcon"></i>
-                <article class="text">
-                    <h1 class="sub-heading">Location</h1>
-                    <p class="para">3700 Willingdon Ave, Burnaby, BC V5G 3H2</p>
-                </article>
-            </div>
-
-            <div class="method">
-                <i class="fa-solid fa-envelope contactIcon"></i>
-                <article class="text">
-                    <h1 class="sub-heading">Email</h1>
-                    <p class="para">Email: NavBCIT@my.bcit.ca</p>
-                </article>
-            </div>
-
-            <div class="method">
-                <i class="fa-solid fa-phone contactIcon"></i>
-                <article class="text">
-                    <h1 class="sub-heading">Phone</h1>
-                    <p class="para">Call Us: (604)-NAV-BCIT</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
+    </div>
 
     <footer class="footer fixed-bottom" style="height: 7.5vh;">
         <div class="container">
@@ -127,11 +84,10 @@
     <!---------------------------------------------->
     <!-- Your own JavaScript functions go here    -->
     <!---------------------------------------------->
-
     <script src="/js/firebaseAPI_TEAMBBY4.js"></script>
+    <script src="/js/authentication.js"></script>
+    <script src="/js/favourites.js" type="module"></script>
     <script src="/js/script.js"></script>
-    <script src="/js/contact.js"></script>
-
 
 </body>
 

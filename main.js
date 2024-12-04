@@ -56,6 +56,10 @@ app.get("/home/about", function (req, res) {
     let doc = fs.readFileSync("./app/html/aboutus.html", "utf-8");
     res.send(doc);
 })
+app.get("/home/success", function (req, res) {
+    let doc = fs.readFileSync("./app/html/success.html", "utf-8");
+    res.send(doc);
+})
 let port = 8000;
 app.listen(port, function () {
     console.log("Listening on port " + port);
