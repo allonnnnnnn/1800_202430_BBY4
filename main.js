@@ -1,10 +1,7 @@
-require('dotenv').config();
-const functions = require("firebase-functions");
 const express = require("express");
 const fetch = import("node-fetch");
 const app = express();
 const fs = require("fs");
-const googleAPIKey = process.env.GOOGLE_API_KEY;
 
 app.use(express.json());
 app.use("/images", express.static("./public/images"));
