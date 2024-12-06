@@ -1,3 +1,6 @@
+/**
+ * Changes the markers on the map if they are favourited
+ */
 function displayFavourites() {
     let listTemplate = document.getElementById("listTemplate");
 
@@ -33,11 +36,6 @@ function displayFavourites() {
     });
 }
 displayFavourites();
-
-function removeFavourite(event) {
-    let element = event.target;
-    console.log(element.innerHTML);
-}
 
 const savedZoomLevel = localStorage.getItem('zoomLevel');
   

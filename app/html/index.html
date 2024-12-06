@@ -33,22 +33,22 @@
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body {
-        background-image: url('/images/bcit2.jpg'); 
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-      }
-      .outlined-text {
-      color: rgba(255, 254, 254, 0.933);
-      text-shadow: 
-          -1px -1px 0 black,  
-           1px -1px 0 black,
-          -1px  1px 0 black,
-           1px  1px 0 black;
-      }
+      background-image: url('/images/bcit2.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
 
-</style>
+    .outlined-text {
+      color: rgba(255, 254, 254, 0.933);
+      text-shadow:
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+    }
+  </style>
 </head>
 
 <body>
@@ -57,20 +57,21 @@
   <!-- Your HTML Layout go here -->
   <!------------------------------>
   <!-- Stuff for body gogit ses here -->
-  
+
   <div id="navbarPlaceholder"></div>
 
   <div class="px-4 pt-5 my-5 text-center" style="color: rgb(255, 255, 255);">
-  <div class="container my-5">
-    <div class="d-flex flex-column align-items-center">
+    <div class="container my-5">
+      <div class="d-flex flex-column align-items-center">
         <img class="img-fluid mb-3" src="/images/logo.png" alt="Logo" style="max-width: 90px;">
         <h1 class="display-4 fw-bold outlined-text text-center">Welcome to NavBCIT</h1>
-        <p class="lead mb-4 fw-bold outlined-text text-center">Click the button below to get started on viewing an interactive map of BCIT!</p>
+        <p class="lead mb-4 fw-bold outlined-text text-center">Click the button below to get started on viewing an
+          interactive map of BCIT!</p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <a href="/login"><button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Sign up/Login</button></a>
+          <a href="/login"><button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">Sign up/Login</button></a>
         </div>
+      </div>
     </div>
-</div>
 
 
     <div class="overflow-hidden" style="max-height: 30vh;">
@@ -89,7 +90,7 @@
   <script src="/js/authentication.js"></script>
   <script src="/js/datastore.js"></script>
 
-  <script> 
+  <script>
     logout();
   </script>
 

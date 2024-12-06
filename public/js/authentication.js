@@ -34,7 +34,7 @@ var uiConfig = {
             }
             return false;
         },
-    
+
         uiShown: function () {
             document.getElementById('loader').style.display = 'none';
         }
@@ -52,6 +52,9 @@ var uiConfig = {
 
 ui.start('#firebaseui-auth-container', uiConfig);
 
+/**
+ * Logs out the user
+ */
 function logout() {
     firebase.auth().signOut().then(() => {
         // Sign-out successful.
@@ -62,6 +65,9 @@ function logout() {
     });
 }
 
+/**
+ * Changes the UI if the user is logged in or not logged in
+ */
 function checkForUser() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {

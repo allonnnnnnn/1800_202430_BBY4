@@ -2,6 +2,9 @@ import apiKey from "./GoogleAPI_BBY4.js";
 window.map;
 let userMarker;
 
+/**
+ * All possible route points on the map.
+ */
 const routePoints = {
     point1: { lat: 49.250200, lng: -123.002176 },
     point2: { lat: 49.250371, lng: -123.002174 },
@@ -64,6 +67,10 @@ const routePoints = {
     point59: { lat: 49.2507269024448, lng: -122.99975419305406 }
 };
 
+/**
+ * The relationship between all points and their
+ * distances between each relationships
+ */
 const routeGraph = {
     point1: { point2: 0, point3: 0, point15: 0 },
     point2: {},
@@ -126,6 +133,10 @@ const routeGraph = {
     point59: { point48: 0, point42: 0, point24: 0 }
 }
 
+/**
+ * The user's selected origin and destination for
+ * the route/navigation system
+ */
 const currentRoutePoints = {
     currentOrigin: null,
     currentDestination: null,
@@ -159,43 +170,6 @@ window.initMap = function () {
 
     window.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    /* These two functions to make it easier to add routes to the map
-    for (const key in routeGraph) {
-        for (const key2 in routeGraph[key]) {
-            const polyline = new google.maps.Polyline({
-                path: [
-                    {lat: routePoints[key].lat, lng: routePoints[key].lng},
-                    {lat: routePoints[key2].lat, lng: routePoints[key2].lng}
-                ],
-                geodesic: true,
-                strokeColor: "#FF0000",
-                strokeOpacity: 1.0,
-                strokeWeight: 2,
-              });
-            polyline.setMap(map);
-        }
-        let labelElement = document.createElement("div");
-        labelElement.innerText = "Building Name";
-        labelElement.style = "font-size: 18pt";
-        google.maps.importLibrary("marker").then(({ AdvancedMarkerElement }) => {
-            let newMarker = new AdvancedMarkerElement({
-                map: window.map,
-                position: { lat: routePoints[key].lat, lng: routePoints[key].lng },
-                content: labelElement,
-                title: key
-            });
-            labelElement.innerText = key;
-        });
-    }
-
-    /*Click on the map to get the position of the click
-    map.addListener("click", (event) => {
-        const lat = event.latLng.lat(); // Latitude of click
-        const lng = event.latLng.lng(); // Longitude of click
-        alert(`lat: ${lat}, lng: ${lng}`);
-    });
-    */
-
     fillInUndirectedGraph();
     loadGeolocater();
 }
@@ -213,7 +187,7 @@ function checkForGoToPlace() {
 
     let place = localStorage.getItem("GoToPlace");
     let userPosition = firebase.auth().currentUser.currentPosition;
-    
+
     currentRoutePoints.currentOrigin = { lat: userPosition.latitude, lng: userPosition.longitude };
     db.collection("Features").doc("Buildings").get().then((data) => {
         data = data.data();
@@ -226,6 +200,10 @@ function checkForGoToPlace() {
     localStorage.removeItem("GoToPlace");
 }
 
+/**
+ * Fills in the relationships between all the nodes so that the graph becomes
+ * undirected
+ */
 function fillInUndirectedGraph() {
     for (const key in routeGraph) {
         for (const key2 in routeGraph[key]) {
@@ -239,6 +217,10 @@ function fillInUndirectedGraph() {
     calculateGraphEdges();
 }
 
+/**
+ * Calculates the distance between all nodes that have a relationship
+ * together
+ */
 function calculateGraphEdges() {
     for (const key in routeGraph) {
         for (const key2 in routeGraph[key]) {
@@ -317,6 +299,9 @@ function loadGeolocater() {
     });
 }
 
+/**
+ * Display the modal only if the user is not on BCIT campus
+ */
 function warnUserIsOffCampus() {
     const myModal = new bootstrap.Modal(document.getElementById('warningModal'));
     myModal.show();
@@ -327,7 +312,9 @@ function warnUserIsOffCampus() {
 }
 
 /**
- * Gives functionality to markers like clickable building names. This also gives
+ * Gives functionality to markers like clickable building names. This also gives functionality to 
+ * the info card that pops up AFTER clicking on a building name like the favourites buttons and 
+ * directions button
  * @param {*} snap 
  * @param {*} key 
  */
@@ -355,7 +342,7 @@ window.onMarkerClicked = function (snap, key) {
 
         infoCard.getElementsByClassName("card-title")[0].innerHTML = key;
         infoCard.querySelector("img").src = "/images/" + key + ".png";
-        infoCard.querySelector(".card-text").innerText = snapData[key].description || infoCard.querySelector(".card-text").innerText 
+        infoCard.querySelector(".card-text").innerText = snapData[key].description || infoCard.querySelector(".card-text").innerText
 
         //All this code below adds functionality to the buttons on the infocard
         document.getElementById("directionButton").addEventListener("click", () => {
@@ -411,6 +398,10 @@ function enableMarkerClick() {
     });
 }
 
+/**
+ * Pops up the directions window that has the search bar for the 
+ * origin and destination of the route
+ */
 function popUpDirectionsWindow(assumedDestinationMarker) {
     goBack();
     document.getElementById("searchBar").style = "display: none";
@@ -428,6 +419,9 @@ function popUpDirectionsWindow(assumedDestinationMarker) {
     });
 }
 
+/**
+ * Displays the pop-up route/navigation window
+ */
 function displayRouteWindow() {
     document.getElementById("footerPlaceholder").style.display = "none";
     document.getElementById("navigationWindow").style.display = "block";
@@ -451,6 +445,10 @@ function displayRouteWindow() {
     });
 }
 
+/**
+ * Obtains the route and displays the route on that map.
+ * Zooms the user to the center of the route
+ */
 function displayRoute() {
     let route = calculateRoute();
 
@@ -565,6 +563,7 @@ function dijkstra(startPoint, endPoint) {
         currentKey = nextKey;
     }
 
+    // Creates the route by back tracking the route points from the destination to the origin
     currentKey = closestEndPoint.key;
     while (currentKey != closestStartPoint.key) {
         route.push(routePoints[currentKey]);
@@ -583,6 +582,10 @@ document.getElementsByTagName("input")[0].addEventListener("click", function (ev
     document.getElementsByTagName("input")[0].value = "";
 });
 
+/**
+ * When a search bar is focused on, it will find which one is being currently inputted and display 
+ * the results on that search bar
+ */
 window.onSearchBarFocus = function (inputElement) {
     inputElement.addEventListener("input", function (event) {
         if (inputElement.id == "searchBarInput") {
@@ -606,9 +609,9 @@ window.onSearchBarFocus = function (inputElement) {
             searchList.insertBefore(templateClone, searchList.children[0]);
 
             let currentLocationClone = searchList.children[0];
-            currentLocationClone.addEventListener("click", function() {
+            currentLocationClone.addEventListener("click", function () {
                 let userPosition = firebase.auth().currentUser.currentPosition;
-                currentRoutePoints.currentOrigin = {lat: userPosition.latitude, lng: userPosition.longitude};
+                currentRoutePoints.currentOrigin = { lat: userPosition.latitude, lng: userPosition.longitude };
                 searchList.innerText = "";
                 inputElement.value = "Current Location";
             });
@@ -620,12 +623,10 @@ window.onSearchBarFocus = function (inputElement) {
     });
 }
 
-window.onSearchBarOutOfFocus = function (inputElement) {
-    inputElement.removeEventListener("input", () => { });
-    let searchList = document.getElementById("search-results-go-here");
-    searchList.innerHTML = "";
-}
-
+/**
+ * Uses's an in-built JavaScipt function to find and sort out all markers. 
+ * Then displays the filtered and sorted search results benath the search bar
+ */
 function displaySearchResult(inputElement, outputElement, callback) {
     let searchList = outputElement;
     if (searchList == null) return;
@@ -636,16 +637,19 @@ function displaySearchResult(inputElement, outputElement, callback) {
 
     if (input.length == 0) return;
 
-    //Will sort the markers if 
+    // Will filter the marker if the uer's input is found inside of the maker's name 
     const filteredMarkers = window.markers.filter((marker) => {
         return marker.title.toLowerCase().includes(input);
     });
+
+    // Sorts the marks alphabetically from ascending order
     filteredMarkers.sort((marker1, marker2) => {
         if (marker1.title.toLowerCase() > marker2.title.toLowerCase()) return 1;
         if (marker1.title.toLowerCase() < marker2.title.toLowerCase()) return -1;
         return 0;
     });
 
+    // Dynamically displays the search results
     filteredMarkers.forEach(marker => {
         if (marker.title == "" || marker.featureType == "Washrooms" || marker.featureType == "Microwaves" || marker.featureType == "WaterFountains") return;
 
@@ -663,6 +667,9 @@ function displaySearchResult(inputElement, outputElement, callback) {
     });
 }
 
+/**
+ * When an option in the "Find Nearest" Button is clicked
+ */
 window.onDropDownButtonsClicked = function (feature) {
     db.collection("Features").doc(feature).get().then((doc) => {
         let currentUserPosition = firebase.auth().currentUser.currentPosition;

@@ -31,15 +31,15 @@
   <!-- Link to styles of your own -->
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-   <style>
-    body{
+  <style>
+    body {
       background-color: blue;
     }
 
     label {
-        color: white;
+      color: white;
     }
-   </style>
+  </style>
 </head>
 
 <body>
@@ -57,38 +57,38 @@
     <h1 style="color: white;">Change Request</h1>
     <br>
     <form>
-        <div class="form-group">
-            <label for="building">Building name</label>
-            <br>
-            <input type="text" class="form-control" id="building" placeholder="Building">
-        </div>
+      <div class="form-group">
+        <label for="building">Building name</label>
         <br>
-        <div class="form-group">
-            <label for="description">Comment</label>
-            <textarea class="form-control" id="description" rows="3"></textarea>
-        </div>
-        <br><br>
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-lg btn-primary" onclick="writeRequest()">Submit</button>
-        </div>
-    </form>
-</div>
-
-<footer class="footer fixed-bottom" style="height: 7.5vh;" >
-  <div class="container">
-    <nav class="navbar navbar-expand-lg" style="background-color: darkblue;">
-      <div class="container-fluid">
-        <img src="/images/back.png" width="35" height="35" class="white-img" onclick="history.back()" alt="logo">
-        <a href="/home/request"><img src="/images/Request.png" width="35" height="35" class="white-img"
-            alt="logo"></a>
-        <a href="/home/favourites"><img src="/images/bookmark.png" width="35" height="35" class="white-img"
-            alt="logo"></a>
-        <a href="/home/setting"><img src="/images/settings.png" width="35" height="35" class="white-img"
-            alt="logo"></a>
+        <input type="text" class="form-control" id="building" placeholder="Building">
       </div>
-    </nav>
+      <br>
+      <div class="form-group">
+        <label for="description">Comment</label>
+        <textarea class="form-control" id="description" rows="3"></textarea>
+      </div>
+      <br><br>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-lg btn-primary" onclick="writeRequest()">Submit</button>
+      </div>
+    </form>
   </div>
-</footer>
+
+  <footer class="footer fixed-bottom" style="height: 7.5vh;">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg" style="background-color: darkblue;">
+        <div class="container-fluid">
+          <img src="/images/back.png" width="35" height="35" class="white-img" onclick="history.back()" alt="logo">
+          <a href="/home/request"><img src="/images/Request.png" width="35" height="35" class="white-img"
+              alt="logo"></a>
+          <a href="/home/favourites"><img src="/images/bookmark.png" width="35" height="35" class="white-img"
+              alt="logo"></a>
+          <a href="/home/setting"><img src="/images/settings.png" width="35" height="35" class="white-img"
+              alt="logo"></a>
+        </div>
+      </nav>
+    </div>
+  </footer>
   <!---------------------------------------------->
   <!-- Your own JavaScript functions go here    -->
   <!---------------------------------------------->

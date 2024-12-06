@@ -26,7 +26,7 @@ microwaveImg.style.height = "60px";
 
 const washroomImg = document.createElement("img");
 washroomImg.src = "/images/WashroomIcon.png";
-washroomImg.style.height = "60px"; 
+washroomImg.style.height = "60px";
 
 const markerOptions = {
     "Buildings": {
@@ -76,7 +76,7 @@ function readAll() {
                         let currentZoom = window.map.getZoom();
                         newMarker.map = currentZoom >= markerCustomizations.zoom ? map : null;
                     });
-                    
+
                     newMarker.addListener("click", function () {
                         if (!newMarker.Clickable) return;
                         window.onMarkerClicked(featureDoc, key);
@@ -117,7 +117,7 @@ function displayFavouriteOnMap(locationLat, locationLng) {
         foundMarker.content.querySelector("p").innerHTML += foundMarker.title;
     } else {
         foundMarker.content = markerOptions["Buildings"].content.cloneNode(true);
-        foundMarker.content.innerText = foundMarker.title; 
+        foundMarker.content.innerText = foundMarker.title;
         foundMarker.favourited = false;
     }
 }
