@@ -1,17 +1,15 @@
-function darkMode() {
-    let checkbox = document.getElementById("darkmode");
-    let body = document.getElementById('body')
-    var element = document.body;
-    element.classList.toggle("dark-mode");
-
-    // checkbox.addEventListener('change', function () {
-    //     if (this.checked) {
-    //         body.classList.add('dark')
-    //     } else {
-    //         body.classList.remove('dark')
-    //     }
-    // });
+function darkmode() {
+  const wasDarkmode = localStorage.getItem('darkmode') === 'true';
+  localStorage.setItem('darkmode', !wasDarkmode);
+  const element = document.body;
+  element.classList.toggle('dark-mode', !wasDarkmode);
 }
+function onload() {
+  document.body.classList.toggle('dark-mode', localStorage.getItem('darkmode') === 'true');
+}
+
+
+
 const zoomSlider = document.getElementById('zoom-slider');
 const zoomValue = document.getElementById('zoom-value');
 

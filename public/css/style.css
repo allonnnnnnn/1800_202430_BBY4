@@ -55,6 +55,8 @@ img {
 
 .footer {
     background-color: darkblue;
+    margin-top: 50px; /* This creates the gap between content and footer */
+
 }
 
 
@@ -553,4 +555,32 @@ form {
 #cityInput::placeholder {
     color: #93bbe2;
     /* Light blue color */
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+}
+body:not(.dark-mode) {
+    --color: rgb(20, 47, 228);
+    --background-color: white;
+}
+.dark-mode {
+    --background-color: white;
+    --color: rgb(0, 0, 0);
+}
+
+
+.container__btn {
+    padding: 10px;
+    color: var(--color);
+    background-color: var(--background-color);
+    border: 1px solid var(--color);
+    cursor: pointer;
+}
+.container__btn:hover {
+    color:#ccae62;
+    border: 1px solid #ccae62;
 }

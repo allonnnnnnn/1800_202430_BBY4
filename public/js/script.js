@@ -7,3 +7,4 @@ function w3_toggle() {
     // Prevent horizontal scroll when sidebar is open
     document.body.classList.toggle("sidebar-open");
 }
+

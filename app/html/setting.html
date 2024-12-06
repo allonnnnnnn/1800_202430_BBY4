@@ -37,10 +37,12 @@
     body {
       background-color: rgb(20, 47, 228);
     }
+    
+
   </style>
 </head>
 
-<body>
+<body onload="onload()" >
 
   <!------------------------------>
   <!-- Your HTML Layout go here -->
@@ -53,7 +55,6 @@
   <h2 style="text-align: center; font-weight: bold;">Welcome to your Settings</h2>
   <br>
   <ul class="list-group">
-    <li class="list-group-item"><button id="darkmode" onclick="darkMode()">Toggle Dark Mode</button></li>
     <li class="list-group-item" id="second-item"
       style="display: flex; justify-content: space-between; align-items: center;">
 
@@ -63,12 +64,11 @@
         <span id="zoom-value">16px</span>
       </div>
     </li>
-    <li class="list-group-item">A third item</li>
-    <li class="list-group-item">A fourth item</li>
-    <li class="list-group-item">And a fifth one</li>
+    <li class="list-group-item"> <button class="container__btn" onclick="darkmode()">Dark Mode</button>
+    </li>
   </ul>
 
-
+ 
 
 
   <footer class="footer fixed-bottom" style="height: 7.5vh;">
