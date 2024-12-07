@@ -85,7 +85,7 @@ It has the following subfolders and files:
         /request.js                # Handles the Request page functions
         /script.js                 # Handles the sidebar opening and closing
         /setting.js                # Handles the settings functionality 
-        /firebaseAPI_TEAMBBY4.js   # Has our API data
+        /firebaseAPI_TEAMBBY4.js   # Has our API datareadme
 
 
 
