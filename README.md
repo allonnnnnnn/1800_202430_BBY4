@@ -62,14 +62,31 @@ It has the following subfolders and files:
     /main.html              # The main page of our app where the map loads in
     /favourites.html        # The page that loads up the user's favourited place's 
     /infoCard.html          # The card that pops up when a user clicks on a marker
+    /aboutus.html           # This page contains our team list for NAVBCIT
+    /request.html           # The page is for requesting isses you've seen to be chaned
+    /loggedinFooter.html    # This contains the footer placeholder when someone logs in
+    /loggedinNavbar.html    # This contains the Navbar/sidebar placeholder when someone logs in
+    /loggedOutFooter.html   # This contains the footer layout when someone is logged out
+    /loggedOutNavbar.html   # This contains the Navbar layout when someone is logged out
+    /profile.html           # The page that shows users info such as name,school, and city.
+    /setting.html           # This page contains darkmode and zoom features 
+    /success.html           # This page opens up when you submit a contact form. it'll tell you that you did submit.
+    /thanks.html            # This page opens up when you submit a request form. it'll tell you that you did submit.
+    /contact.html           # The page that contains our contact form.
+
+    
 ├── public
-    /scripts                # Folder for scripts
-        /map.js             # main script file for handeling the map and all its functionality  
-        /authentication.js  # Handles the user login and authentication of the user
-        /favourites.js      # Handles the favourites system
-        /datastore.js       # Loads all the fata within the 'Features' collection onto the map
+    /scripts                       # Folder for scripts
+        /map.js                    # main script file for handeling the map and all its functionality  
+        /authentication.js         # Handles the user login and authentication of the user
+        /favourites.js             # Handles the favourites system
+        /datastore.js              # Loads all the fata within the 'Features' collection onto the map
+        /contact.js                # Handles the contact page functions
+        /request.js                # Handles the Request page functions
+        /script.js                 # Handles the sidebar opening and closing
+        /setting.js                # Handles the settings functionality 
+        /firebaseAPI_TEAMBBY4.js   # Has our API data
 
 
-```
 
 

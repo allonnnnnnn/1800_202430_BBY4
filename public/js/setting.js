@@ -1,12 +1,30 @@
+// This function toggles the dark mode on and off
 function darkmode() {
+  // Check the current state of dark mode (from localStorage)
   const wasDarkmode = localStorage.getItem('darkmode') === 'true';
+  
+  // Save the new state in localStorage (flip the current state)
   localStorage.setItem('darkmode', !wasDarkmode);
+  
+  // Toggle the 'dark-mode' class on the body
   const element = document.body;
   element.classList.toggle('dark-mode', !wasDarkmode);
 }
+
+// This function is called on page load to apply dark mode if saved in localStorage
 function onload() {
-  document.body.classList.toggle('dark-mode', localStorage.getItem('darkmode') === 'true');
+  // Check if dark mode was enabled previously and apply the class to the body
+  const darkModeEnabled = localStorage.getItem('darkmode') === 'true';
+  if (darkModeEnabled) {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
 }
+
+// Run the onload function when the page loads
+window.onload = onload;
+
 
 
 
